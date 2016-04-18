@@ -28,7 +28,6 @@ public class AnimatePieFragment extends BaseFragment{
         mPie.addData(2, 20, getResources().getColor(R.color.green_1fda9a));
         mPie.addData(3, 5, getResources().getColor(R.color.blue_70e1ff));
         mPie.addData(4, 5, getResources().getColor(R.color.purple_ccccfb));
-
         mPie.startDraw();
     }
 }

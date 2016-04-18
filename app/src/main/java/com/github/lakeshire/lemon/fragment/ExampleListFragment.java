@@ -12,6 +12,7 @@ import com.github.lakeshire.lemon.fragment.base.BaseFragment;
 import com.github.lakeshire.lemon.fragment.examples.AnimatePieFragment;
 import com.github.lakeshire.lemon.fragment.examples.RunFragment;
 import com.github.lakeshire.lemon.fragment.examples.TestFragment;
+import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ExampleListFragment extends BaseFragment {
 
     @Override
     public void initUi() {
+        super.initUi();
         mAdapter = new ExampleAdapter(getActivity(), mDatas, R.layout.item_example);
         mLvExample.setAdapter(mAdapter);
         mLvExample.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -43,6 +45,7 @@ public class ExampleListFragment extends BaseFragment {
 
     @Override
     public void loadData() {
+        super.loadData();
         mDatas.clear();
         mDatas.add(new ExampleModel("动效饼图", AnimatePieFragment.class));
         mDatas.add(new ExampleModel("Test", TestFragment.class));
@@ -51,7 +54,7 @@ public class ExampleListFragment extends BaseFragment {
     }
 
     @Override
-    public int getLayoutId() { return R.layout.fragment_list; }
+    public int getLayoutId() { return R.layout.fragment_example_list; }
 
     class ExampleModel {
         public ExampleModel(String name, Class<?> clazz) {
@@ -72,5 +75,13 @@ public class ExampleListFragment extends BaseFragment {
         public void bindViewData(ViewHolder viewHolder, ExampleModel item, int position) {
             viewHolder.setText(R.id.tv_title, item.name);
         }
+    }
+
+    @Override
+    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+        ListView absListView = mLvExample;
+        boolean canRefresh =  !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
+        l("canRefresh: " + canRefresh);
+        return canRefresh;
     }
 }

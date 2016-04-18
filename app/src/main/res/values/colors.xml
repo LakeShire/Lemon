@@ -10,4 +10,6 @@
     <color name="blue_065fb9">#065fb9</color>
     <color name="green_1fda9a">#1fda9a</color>
     <color name="purple_ccccfb">#ccccfb</color>
+
+    <color name="black">#000000</color>
 </resources>

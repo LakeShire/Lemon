@@ -7,10 +7,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.activity.BaseActivity;
+import com.github.lakeshire.lemon.view.pulltofresh.EnhanceHeader;
+import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
+import com.github.lakeshire.lemon.view.pulltofresh.PtrHandler;
+
 import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment {
+
+	protected View mContainerView;
+	private EnhancePtrFrameLayout mPtrFrameLayout;
 
 	public void startFragment(Class<?> clazz) {
 		((BaseActivity) getActivity()).startFragment(clazz);
@@ -23,10 +32,10 @@ public abstract class BaseFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(getLayoutId(), container, false);
-		ButterKnife.bind(this, view);
+		mContainerView = inflater.inflate(getLayoutId(), container, false);
+		ButterKnife.bind(this, mContainerView);
 		initUi();
-		return view;
+		return mContainerView;
 	}
 
 	@Override
@@ -36,7 +45,34 @@ public abstract class BaseFragment extends Fragment {
 	}
 
 	public void initUi() {
+		mPtrFrameLayout = (EnhancePtrFrameLayout) mContainerView.findViewById(R.id.ptr_frame);
+		EnhanceHeader header = new EnhanceHeader(getActivity(), 0);
+		header.setCustomTitleBar(true);
 
+		mPtrFrameLayout.setDurationToCloseHeader(1500);
+		mPtrFrameLayout.setHeaderView(header);
+		mPtrFrameLayout.setPinHeader(false);
+		mPtrFrameLayout.addPtrUIHandler(header);
+		mPtrFrameLayout.setPtrHandler(new PtrHandler() {
+			@Override
+			public boolean checkCanDoRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+				return checkCanRefresh(frame, content, header);
+			}
+
+			@Override
+			public void onRefreshBegin(EnhancePtrFrameLayout frame) {
+				onRefresh(frame);
+			}
+		});
+
+	}
+
+	protected void onRefresh(EnhancePtrFrameLayout frame) {
+		mPtrFrameLayout.refreshComplete();
+	}
+
+	protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+		return true;
 	}
 
 	public void loadData() {

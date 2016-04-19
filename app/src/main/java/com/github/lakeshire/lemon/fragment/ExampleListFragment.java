@@ -11,6 +11,7 @@ import com.github.lakeshire.lemon.adapter.ViewHolder;
 import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.fragment.examples.AnimatePieFragment;
 import com.github.lakeshire.lemon.fragment.examples.MoreListViewFragment;
+import com.github.lakeshire.lemon.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 
@@ -47,6 +48,7 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("动效饼图", AnimatePieFragment.class));
         mDatas.add(new ExampleModel("可横向滑动的宽列表", SlideListViewFragment.class));
         mDatas.add(new ExampleModel("隐藏额外按钮的列表", MoreListViewFragment.class));
+        mDatas.add(new ExampleModel("仿豌豆荚的详情页", PagerFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

@@ -59,4 +59,9 @@ public abstract class BaseFragment extends Fragment {
     protected View find(int res) {
         return mContainerView.findViewById(res);
     }
+
+    protected boolean onBackPressed() {
+        getActivity().onBackPressed();
+        return true;
+    }
 }

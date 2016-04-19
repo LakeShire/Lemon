@@ -35,12 +35,6 @@ public class HttpUtil {
         void onSuccess(String response);
     }
 
-    class Wrapper {
-        int ret = 0;
-        String response;
-        String error;
-    }
-
     /**
      * 异步GET
      * @param url

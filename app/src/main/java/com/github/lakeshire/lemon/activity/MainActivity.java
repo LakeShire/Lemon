@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.fragment.ExampleListFragment;
+import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity {
@@ -20,6 +23,7 @@ public class MainActivity extends BaseActivity {
 		Fragment fragment = new ExampleListFragment();
 		if (fragment != null) {
 			fm.beginTransaction().add(R.id.container, fragment).commit();
+            mFragmentStack.push((BaseFragment) fragment);
 		}
     }
 
@@ -42,8 +46,9 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (!endFragment()) {
-			super.onBackPressed();
-		}
+        BaseFragment f = mFragmentStack.peek();
+        if (!f.onBackPressed()) {
+            super.onBackPressed();
+        }
 	}
 }

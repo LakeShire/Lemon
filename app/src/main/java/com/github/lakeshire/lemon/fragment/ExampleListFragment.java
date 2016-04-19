@@ -83,4 +83,13 @@ public class ExampleListFragment extends BasePullFragment {
         l("canRefresh: " + canRefresh);
         return canRefresh;
     }
+
+    /**
+     * 主Fragment必须重写这个
+     * @return
+     */
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
 }

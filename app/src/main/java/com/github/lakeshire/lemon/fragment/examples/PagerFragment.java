@@ -33,7 +33,7 @@ public class PagerFragment extends BasePullFragment {
 
         mTab = (PagerSlidingTabStrip) find(R.id.tabs);
         mPager = (ViewPager) find(R.id.pager);
-        mAdapter = new MyAdapter(getActivity().getSupportFragmentManager());
+        mAdapter = new MyAdapter(getChildFragmentManager());
         mPager.setAdapter(mAdapter);
         mTab.setViewPager(mPager);
     }

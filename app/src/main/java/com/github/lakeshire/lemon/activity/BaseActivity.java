@@ -4,9 +4,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+
 import com.github.lakeshire.lemon.R;
+import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+
+import java.util.Stack;
 
 public class BaseActivity extends AppCompatActivity {
+
+	public Stack<BaseFragment> mFragmentStack = new Stack();
 
 	public void startFragment(Class<?> clazz) {
     	try {
@@ -16,6 +22,7 @@ public class BaseActivity extends AppCompatActivity {
 				FragmentTransaction ft = fm.beginTransaction();
 				ft.replace(R.id.container, fragment);
 				ft.addToBackStack(clazz.getSimpleName()).commit();
+				mFragmentStack.add((BaseFragment) fragment);
 			}
 		} catch (InstantiationException e) {
 			e.printStackTrace();
@@ -28,6 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     	FragmentManager fm = getSupportFragmentManager();
     	if (fm.getBackStackEntryCount() > 0) {
     		fm.popBackStackImmediate();
+			mFragmentStack.pop();
     		return true;
     	} else {
     		return false;

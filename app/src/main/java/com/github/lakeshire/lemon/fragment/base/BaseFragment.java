@@ -60,8 +60,8 @@ public abstract class BaseFragment extends Fragment {
         return mContainerView.findViewById(res);
     }
 
-    protected boolean onBackPressed() {
-        getActivity().onBackPressed();
+    public boolean onBackPressed() {
+        endFragment();
         return true;
     }
 }

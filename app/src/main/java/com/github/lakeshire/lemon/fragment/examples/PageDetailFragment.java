@@ -98,7 +98,8 @@ public class PageDetailFragment extends BasePullFragment {
         return R.layout.fragment_detail_page;
     }
 
-    public void dissmissDetailView() {
+    public void dismissDetailView() {
+        l("dismissDetailView");
         ((ViewGroup) mDetailView.getParent()).removeView(mDetailView);
         mDetailView.setAdded(false);
     }
@@ -109,8 +110,8 @@ public class PageDetailFragment extends BasePullFragment {
 
     @Override
     public boolean onBackPressed() {
-        if (mDetailView.isAdded()) {
-            dissmissDetailView();
+        if (mDetailView != null && mDetailView.isAdded()) {
+            dismissDetailView();
             return true;
         } else {
             return false;

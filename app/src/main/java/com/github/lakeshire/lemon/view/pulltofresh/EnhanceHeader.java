@@ -12,13 +12,10 @@ import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.view.DraggableCircle;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
 

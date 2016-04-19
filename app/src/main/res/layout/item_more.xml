@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.lakeshire.lemon.view.morelistview.MoreItem
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_id"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/check"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+        <CheckBox
+            android:id="@id/check"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/hidden"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="-64dp" >
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ff0000"
+            android:text="删除"
+            android:textColor="#ffffff"
+            android:gravity="center"/>
+    </RelativeLayout>
+</com.github.lakeshire.lemon.view.morelistview.MoreItem>

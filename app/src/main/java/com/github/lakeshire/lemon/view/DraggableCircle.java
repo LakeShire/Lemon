@@ -15,7 +15,7 @@ import android.view.View;
 import com.github.lakeshire.lemon.R;
 
 /**
- * Created by nali on 2016/4/14.
+ * 模拟水滴效果的可拖动的圆 可以做为下拉刷新的头部动画
  */
 public class DraggableCircle extends View {
 

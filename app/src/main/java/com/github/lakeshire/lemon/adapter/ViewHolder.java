@@ -22,7 +22,7 @@ public class ViewHolder {
     }
 
     public static ViewHolder getView(View convertView, int layoutId, Context context) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder(layoutId, context);
         } else {

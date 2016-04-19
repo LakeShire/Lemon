@@ -1,15 +1,11 @@
 package com.github.lakeshire.lemon.fragment.examples;
 
 import com.github.lakeshire.lemon.R;
-import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.view.AnimatePieChart;
-
 import butterknife.Bind;
 
-/**
- * Created by nali on 2016/4/18.
- */
-public class AnimatePieFragment extends BaseFragment{
+public class AnimatePieFragment extends BasePullFragment {
 
     @Bind(R.id.pie)
     AnimatePieChart mPie;

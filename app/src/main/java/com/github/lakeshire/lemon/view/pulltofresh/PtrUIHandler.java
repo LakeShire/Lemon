@@ -2,9 +2,6 @@ package com.github.lakeshire.lemon.view.pulltofresh;
 
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
 
-/**
- * Created by nali on 2016/4/11.
- */
 public interface PtrUIHandler {
 
     /**

@@ -3,7 +3,6 @@ package com.github.lakeshire.lemon;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

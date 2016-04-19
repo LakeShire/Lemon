@@ -8,10 +8,10 @@ import android.widget.ListView;
 import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.adapter.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.ViewHolder;
-import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.fragment.examples.AnimatePieFragment;
-import com.github.lakeshire.lemon.fragment.examples.RunFragment;
-import com.github.lakeshire.lemon.fragment.examples.TestFragment;
+import com.github.lakeshire.lemon.fragment.examples.MoreListViewFragment;
+import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 
 import java.util.ArrayList;
@@ -19,10 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-/**
- * Created by nali on 2016/4/18.
- */
-public class ExampleListFragment extends BaseFragment {
+public class ExampleListFragment extends BasePullFragment {
 
     @Bind(R.id.list)
     ListView mLvExample;
@@ -48,8 +45,8 @@ public class ExampleListFragment extends BaseFragment {
         super.loadData();
         mDatas.clear();
         mDatas.add(new ExampleModel("动效饼图", AnimatePieFragment.class));
-        mDatas.add(new ExampleModel("Test", TestFragment.class));
-        mDatas.add(new ExampleModel("Run", RunFragment.class));
+        mDatas.add(new ExampleModel("可横向滑动的宽列表", SlideListViewFragment.class));
+        mDatas.add(new ExampleModel("隐藏额外按钮的列表", MoreListViewFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Scroller;
 import android.widget.TextView;
 import com.github.lakeshire.lemon.R;
-
 import in.srain.cube.views.ptr.PtrUIHandlerHook;
 import in.srain.cube.views.ptr.indicator.PtrIndicator;
 import in.srain.cube.views.ptr.util.PtrCLog;

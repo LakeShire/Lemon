@@ -1,6 +1,5 @@
 package com.github.lakeshire.lemon.activity;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,7 +8,6 @@ import android.view.MenuItem;
 import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.fragment.ExampleListFragment;
 import butterknife.ButterKnife;
-
 
 public class MainActivity extends BaseActivity {
 

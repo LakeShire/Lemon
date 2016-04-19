@@ -9,9 +9,11 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-
 import com.github.lakeshire.lemon.R;
 
+/**
+ * 载入时动态绘制的饼图
+ */
 public class AnimatePieChart extends View {
 
     private Paint mInnerPaint;

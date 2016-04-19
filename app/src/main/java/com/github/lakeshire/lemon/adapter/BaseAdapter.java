@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.lakeshire.lemon.R;
-
 import java.util.List;
 
 public abstract class BaseAdapter<T> extends android.widget.BaseAdapter implements View.OnClickListener {

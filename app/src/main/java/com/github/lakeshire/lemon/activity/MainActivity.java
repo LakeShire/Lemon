@@ -24,7 +24,6 @@ public class MainActivity extends BaseActivity {
         if (fragment == null) {
             fragment = new ExampleListFragment();
             fm.beginTransaction().add(R.id.container, fragment).commit();
-            mFragmentStack.push((BaseFragment) fragment);
         }
     }
 
@@ -46,7 +45,8 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
-        BaseFragment f = mFragmentStack.peek();
+        FragmentManager fm = getSupportFragmentManager();
+        BaseFragment f = (BaseFragment) fm.findFragmentById(R.id.container);
         if (!f.onBackPressed()) {
             super.onBackPressed();
         }

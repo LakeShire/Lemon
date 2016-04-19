@@ -1,6 +1,7 @@
 package com.github.lakeshire.lemon.fragment.examples;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ public class PageDetailFragment extends BasePullFragment {
             public void onClick(View v) {
                 mDetailView = (ScrollableView) View.inflate(getActivity(), R.layout.view_scroll, null);
 
+                Log.i("liuhan", "onclick, this: " + PageDetailFragment.this + ", detail: " + mDetailView);
                 int[] location = new int[2];
                 v.getLocationOnScreen(location);
                 mDetailView.setIconPosition(location[0], location[1] - ScreenUtil.getStatusBarHeight(getActivity()));

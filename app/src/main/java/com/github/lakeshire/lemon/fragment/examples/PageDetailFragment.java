@@ -48,6 +48,7 @@ public class PageDetailFragment extends BasePullFragment {
 
     @Override
     public void initUi() {
+        super.initUi();
         mListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +100,6 @@ public class PageDetailFragment extends BasePullFragment {
     }
 
     public void dismissDetailView() {
-        l("dismissDetailView");
         ((ViewGroup) mDetailView.getParent()).removeView(mDetailView);
         mDetailView.setAdded(false);
     }

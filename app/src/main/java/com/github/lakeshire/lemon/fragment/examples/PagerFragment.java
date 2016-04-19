@@ -26,6 +26,7 @@ public class PagerFragment extends BasePullFragment {
 
     @Override
     public void initUi() {
+        super.initUi();
         fragments = new PageDetailFragment[3];
         for (int i = 0; i < 3; i++) {
             fragments[i] = PageDetailFragment.newInstance(titles[i], icons[i]);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ptr_frame"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    cube_ptr:ptr_resistance="1.7"
+    cube_ptr:ptr_ratio_of_header_height_to_refresh="1"
+    cube_ptr:ptr_duration_to_close="300"
+    cube_ptr:ptr_duration_to_close_header="2000"
+    cube_ptr:ptr_keep_header_when_refresh="true"
+    cube_ptr:ptr_pull_to_fresh="true">
+    <LinearLayout
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+        <kale.ui.view.SelectorTextView
+            android:id="@+id/stv_smart"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="按下时可以聪明的切换背景色的TextView"
+            android:textColor="@android:color/white"
+            app:normalColor="#03a9f4"
+            app:normalDrawable="@drawable/btn_rectangle_shape"
+            app:normalStrokeColor="@android:color/white"
+            app:normalStrokeWidth="2dp"
+            app:isSmart="true"/>
+
+        <kale.ui.view.SelectorTextView
+            android:id="@+id/stv_normal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="按下时可以切换背景色和边框的TextView"
+            android:textColor="@android:color/white"
+            app:normalColor="#03a9f4"
+            app:pressedColor="@color/tiffany"
+            app:normalDrawable="@drawable/btn_rectangle_shape"
+            app:normalStrokeColor="@android:color/black"
+            app:pressedStrokeColor="@color/white"
+            app:normalStrokeWidth="2dp"
+            app:checkedColor="@color/orange_fe9d01"/>
+
+        <kale.ui.view.SelectorButton
+            android:id="@+id/sb_normal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="16dp"
+            android:text="按下时可以切换背景色和边框的TextView"
+            android:textColor="@android:color/white"
+            app:normalColor="#03a9f4"
+            app:pressedColor="@color/tiffany"
+            app:normalDrawable="@drawable/btn_rectangle_shape"
+            app:normalStrokeColor="@android:color/black"
+            app:pressedStrokeColor="@color/white"
+            app:normalStrokeWidth="2dp"/>
+    </LinearLayout>
+</com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout>

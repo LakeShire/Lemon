@@ -23,7 +23,7 @@
             android:paddingLeft="@dimen/common_margin"
             android:paddingRight="@dimen/common_margin"
             android:paddingTop="16.0dip"
-            android:text="标签 （选择1-6项）"
+            android:text="标签 （选择1-3项）"
             android:textColor="@color/color_shenhui"
             android:textSize="16.0sp" />
 

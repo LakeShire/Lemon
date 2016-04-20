@@ -39,6 +39,9 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     //  可读性强的日志
     compile 'com.github.tianzhijiexian:logger:1.1.7'
+    //  通用Adapter
     compile 'com.github.tianzhijiexian:CommonAdapter-Fake-DataBinding:1.0.1'
     compile 'com.github.tianzhijiexian:CommonAdapter:1.1.8'
+    //  selector注入器
+    compile 'com.github.tianzhijiexian:SelectorInjection:1.0.3'
 }

@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
 
 import com.github.lakeshire.lemon.R;
 
@@ -14,12 +13,24 @@ import java.util.List;
 
 public class TagListView extends FlowLayout implements OnClickListener {
 
+    private Context context;
     private boolean mIsDeleteMode;
-    private OnTagCheckedChangedListener mOnTagCheckedChangedListener;
+    private Callback mListener;
     private OnTagClickListener mOnTagClickListener;
     private int mTagViewBackgroundResId;
     private int mTagViewTextColorResId;
     private final List<Tag> mTags = new ArrayList<Tag>();
+    private int checkedCount = 0;
+
+    public int getMaxChecked() {
+        return maxChecked;
+    }
+
+    public void setMaxChecked(int maxChecked) {
+        this.maxChecked = maxChecked;
+    }
+
+    private int maxChecked = 0;
 
     /**
      * @param context
@@ -37,6 +48,7 @@ public class TagListView extends FlowLayout implements OnClickListener {
     public TagListView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         // TODO Auto-generated constructor stub
+        this.context = context;
         init();
     }
 
@@ -82,26 +94,61 @@ public class TagListView extends FlowLayout implements OnClickListener {
             localTagView.setBackgroundResource(mTagViewBackgroundResId);
         }
 
-        localTagView.setChecked(t.isChecked());
+        if (t.isChecked()) {
+            checkedCount++;
+            if (checkedCount > maxChecked) {
+                t.setChecked(false);
+                checkedCount--;
+            }
+        }
         localTagView.setCheckEnable(b);
+        localTagView.setChecked(t.isChecked());
+
         if (mIsDeleteMode) {
             int k = (int) TypedValue.applyDimension(1, 5.0F, getContext().getResources().getDisplayMetrics());
             localTagView.setPadding(localTagView.getPaddingLeft(), localTagView.getPaddingTop(), k, localTagView.getPaddingBottom());
-            localTagView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.forum_tag_close, 0);
+            localTagView.setDeleteMode(mIsDeleteMode);
         }
         if (t.getBackgroundResId() > 0) {
             localTagView.setBackgroundResource(t.getBackgroundResId());
         }
         if ((t.getLeftDrawableResId() > 0) || (t.getRightDrawableResId() > 0)) {
-            localTagView.setCompoundDrawablesWithIntrinsicBounds(t.getLeftDrawableResId(), 0, t.getRightDrawableResId(), 0);
+//            localTagView.setCompoundDrawablesWithIntrinsicBounds(t.getLeftDrawableResId(), 0, t.getRightDrawableResId(), 0);
         }
         localTagView.setOnClickListener(this);
-        localTagView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton paramAnonymousCompoundButton, boolean paramAnonymousBoolean) {
-                t.setChecked(paramAnonymousBoolean);
-                if (TagListView.this.mOnTagCheckedChangedListener != null) {
-                    TagListView.this.mOnTagCheckedChangedListener.onTagCheckedChanged((TagView) paramAnonymousCompoundButton, t);
+        localTagView.setCallback(new TagView.Callback() {
+            @Override
+            public void onCheckedChanged(TagView view, boolean b) {
+                t.setChecked(b);
+                if (!b) {
+                    checkedCount--;
+                    t.setChecked(false);
+                    if (TagListView.this.mListener != null) {
+                        TagListView.this.mListener.onTagCheckedChanged(view, t);
+                    }
+                } else {
+                    checkedCount++;
+                    t.setChecked(true);
+                    if (checkedCount > maxChecked) {
+                        view.setCheckedWithNoNotify(false);
+                        t.setChecked(false);
+                        checkedCount--;
+                    } else {
+                        if (TagListView.this.mListener != null) {
+                            TagListView.this.mListener.onTagCheckedChanged(view, t);
+                        }
+                    }
                 }
+                view.updateDrawable();
+            }
+
+            @Override
+            public void onDeleteClicked(TagView view) {
+                if (view.isChecked()) {
+                    checkedCount--;
+                }
+                removeView(view);
+                TagListView.this.mListener.onDeleteClicked(t);
             }
         });
         addView(localTagView);
@@ -151,8 +198,8 @@ public class TagListView extends FlowLayout implements OnClickListener {
         mIsDeleteMode = b;
     }
 
-    public void setOnTagCheckedChangedListener(OnTagCheckedChangedListener onTagCheckedChangedListener) {
-        mOnTagCheckedChangedListener = onTagCheckedChangedListener;
+    public void setCallback(Callback onTagCheckedChangedListener) {
+        mListener = onTagCheckedChangedListener;
     }
 
     public void setOnTagClickListener(OnTagClickListener onTagClickListener) {
@@ -179,8 +226,9 @@ public class TagListView extends FlowLayout implements OnClickListener {
         }
     }
 
-    public static abstract interface OnTagCheckedChangedListener {
+    public static abstract interface Callback {
         public abstract void onTagCheckedChanged(TagView tagView, Tag tag);
+        void onDeleteClicked(Tag t);
     }
 
     public static abstract interface OnTagClickListener {

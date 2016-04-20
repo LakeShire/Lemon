@@ -101,7 +101,6 @@ public class DraggableCircle extends View {
                 startRotateAnimation();
             default:
                 break;
-
         }
     }
 

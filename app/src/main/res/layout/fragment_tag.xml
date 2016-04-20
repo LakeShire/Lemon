@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ptr_frame"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    cube_ptr:ptr_resistance="1.7"
+    cube_ptr:ptr_ratio_of_header_height_to_refresh="1"
+    cube_ptr:ptr_duration_to_close="300"
+    cube_ptr:ptr_duration_to_close_header="2000"
+    cube_ptr:ptr_keep_header_when_refresh="true"
+    cube_ptr:ptr_pull_to_fresh="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tag_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/common_margin"
+            android:paddingRight="@dimen/common_margin"
+            android:paddingTop="16.0dip"
+            android:text="标签 （选择1-6项）"
+            android:textColor="@color/color_shenhui"
+            android:textSize="16.0sp" />
+
+        <com.github.lakeshire.lemon.view.tagview.TagListView
+            xmlns:f="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/tagview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/common_margin"
+            android:paddingLeft="@dimen/common_margin"
+            android:paddingRight="@dimen/common_margin"
+            android:paddingTop="16.0dip"
+            f:horizontalSpacing="@dimen/tag_horizontal_spacing"
+            f:orientation="horizontal"
+            f:verticalSpacing="@dimen/tag_vertical_spacing" />
+
+    </LinearLayout>
+</com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout>

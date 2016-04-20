@@ -10,23 +10,11 @@
     cube_ptr:ptr_duration_to_close_header="2000"
     cube_ptr:ptr_keep_header_when_refresh="true"
     cube_ptr:ptr_pull_to_fresh="true">
-
-    <RelativeLayout
+	
+    <ListView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="模仿PATH菜单"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_centerInParent="true"/>
-        <com.github.lakeshire.lemon.view.PathMenu
-            android:id="@+id/path_menu"
-            android:layout_width="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="32dp"
-            android:layout_height="match_parent"/>
-    </RelativeLayout>
+    </ListView>
 </com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout>
+

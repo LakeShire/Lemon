@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.lakeshire.lemon"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -23,11 +23,22 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.+'
+    //  加载动画
     compile 'com.github.ybq:AndroidSpinKit:v1.0.0'
+    //  代码生成框架
     compile 'com.jakewharton:butterknife:7.0.1'
+    //  下拉刷新
     compile 'in.srain.cube:ultra-ptr:1.0.11'
+    //  网络通信
     compile 'com.squareup.okio:okio:1.6.0'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    //  JSON解析
     compile 'com.alibaba:fastjson:1.2.8'
+    //  标签栏
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    //  可读性强的日志
+    compile 'com.github.tianzhijiexian:logger:1.1.7'
+    compile 'com.github.tianzhijiexian:CommonAdapter-Fake-DataBinding:1.0.1'
+    compile 'com.github.tianzhijiexian:CommonAdapter:1.1.8'
 }

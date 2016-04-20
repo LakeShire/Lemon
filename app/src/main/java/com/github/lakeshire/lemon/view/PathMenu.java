@@ -3,6 +3,7 @@ package com.github.lakeshire.lemon.view;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -16,6 +17,7 @@ import com.github.lakeshire.lemon.R;
  */
 public class PathMenu extends RelativeLayout {
 
+    private Context context;
     private ImageView[] images;
 //    private int[] icons = {R.drawable.path_music, R.drawable.path_location, R.drawable.path_photo, R.drawable.path_quote, R.drawable.path_sleep};
     private boolean expanded = false;
@@ -27,6 +29,7 @@ public class PathMenu extends RelativeLayout {
     private int startAngle;
     private int range = 0;
     private long animateDuration = 500;
+    private Drawable background;
 
     public PathMenu(Context context) {
         super(context);
@@ -45,6 +48,8 @@ public class PathMenu extends RelativeLayout {
     }
 
     public void initView(Context context, int[] icons, OnClickListener[] listeners, int radius, int startAngle, int range, int animateDuration) {
+        this.context = context;
+
         images = new ImageView[icons.length];
         dstX = new int[icons.length];
         dstY = new int[icons.length];
@@ -94,8 +99,8 @@ public class PathMenu extends RelativeLayout {
     }
 
     private void expandMenu() {
-        int width = getWidth();
-        int height = getHeight();
+        background = ((View) getParent()).getBackground();
+        ((View) getParent()).setBackgroundResource(R.color.transparent_black_light);
         for (int i = 0; i < images.length; i++) {
             dstX[i] = (int) (radius * Math.cos(startAngle - (range / (images.length - 1)) * Math.PI / 180 * i));
             dstY[i] = (int) (radius * Math.sin(startAngle - (range / (images.length - 1)) * Math.PI / 180 * i));
@@ -146,6 +151,7 @@ public class PathMenu extends RelativeLayout {
     }
 
     private void foldMenu() {
+        ((View) getParent()).setBackgroundDrawable(background);
         ValueAnimator animator = ValueAnimator.ofFloat(0, 1);
         animator.setInterpolator(new OvershootInterpolator());
         animator.setDuration(animateDuration);

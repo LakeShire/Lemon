@@ -19,18 +19,19 @@ public class PagerFragment extends BasePullFragment {
     private PagerSlidingTabStrip mTab;
     private ViewPager mPager;
 
-    public String[] titles = {"音乐", "游戏", "软件"};
+    public String[] titles = {"音乐", "游戏", "ListView", "RecyclerView"};
     public int[] icons = {R.drawable.music, R.drawable.game, R.drawable.soft};
-    public PageDetailFragment fragments[];
+    public Fragment fragments[];
     private MyAdapter mAdapter;
 
     @Override
     public void initUi() {
         super.initUi();
-        fragments = new PageDetailFragment[3];
-        for (int i = 0; i < 3; i++) {
-            fragments[i] = PageDetailFragment.newInstance(titles[i], icons[i]);
-        }
+        fragments = new Fragment[4];
+        fragments[0] = PageDetailFragment.newInstance(titles[0], icons[0]);
+        fragments[1] = PageDetailFragment.newInstance(titles[1], icons[1]);
+        fragments[2] = new CommonListFragment();
+        fragments[3] = new RecycleListFragment();
 
         mTab = (PagerSlidingTabStrip) find(R.id.tabs);
         mPager = (ViewPager) find(R.id.pager);
@@ -63,9 +64,14 @@ public class PagerFragment extends BasePullFragment {
 
     @Override
     public boolean onBackPressed() {
-        PageDetailFragment fragment = fragments[mPager.getCurrentItem()];
-        if (fragment.onBackPressed()) {
-            return true;
+        Fragment fragment = fragments[mPager.getCurrentItem()];
+        if (fragment instanceof  PageDetailFragment) {
+            PageDetailFragment f = (PageDetailFragment) fragment;
+            if (f.onBackPressed()) {
+                return true;
+            } else {
+                return super.onBackPressed();
+            }
         } else {
             return super.onBackPressed();
         }

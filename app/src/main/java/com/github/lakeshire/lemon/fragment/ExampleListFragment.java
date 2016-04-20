@@ -14,6 +14,7 @@ import com.github.lakeshire.lemon.fragment.examples.MoreListViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemon.fragment.examples.PathMenuFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
+import com.github.lakeshire.lemon.fragment.examples.TagViewFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("隐藏额外按钮的列表", MoreListViewFragment.class));
         mDatas.add(new ExampleModel("仿豌豆荚的详情页", PagerFragment.class));
         mDatas.add(new ExampleModel("Path经典动画菜单", PathMenuFragment.class));
+        mDatas.add(new ExampleModel("标签", TagViewFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

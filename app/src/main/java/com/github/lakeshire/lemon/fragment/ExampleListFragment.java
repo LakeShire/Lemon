@@ -10,11 +10,13 @@ import com.github.lakeshire.lemon.adapter.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.ViewHolder;
 import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.fragment.examples.AnimatePieFragment;
+import com.github.lakeshire.lemon.fragment.examples.CircleProgressFragment;
 import com.github.lakeshire.lemon.fragment.examples.MoreListViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemon.fragment.examples.PathMenuFragment;
 import com.github.lakeshire.lemon.fragment.examples.SelectorFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
+import com.github.lakeshire.lemon.fragment.examples.SwitchButtonFragment;
 import com.github.lakeshire.lemon.fragment.examples.TagViewFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 
@@ -55,6 +57,8 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("Path经典动画菜单", PathMenuFragment.class));
         mDatas.add(new ExampleModel("标签", TagViewFragment.class));
         mDatas.add(new ExampleModel("Selector注入器", SelectorFragment.class));
+        mDatas.add(new ExampleModel("SwitchButton", SwitchButtonFragment.class));
+        mDatas.add(new ExampleModel("环形进度条", CircleProgressFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

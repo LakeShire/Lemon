@@ -44,4 +44,8 @@ dependencies {
     compile 'com.github.tianzhijiexian:CommonAdapter:1.1.8'
     //  selector注入器
     compile 'com.github.tianzhijiexian:SelectorInjection:1.0.3'
+    //  SwitchButton
+    compile 'com.kyleduo.switchbutton:library:1.4.0'
+    //  环形进度条
+    compile 'com.github.jakob-grabner:Circle-Progress-View:v1.2.9'
 }

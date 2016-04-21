@@ -53,7 +53,7 @@
             android:layout_height="48dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
-            android:text="按下时可以切换背景色和边框的TextView"
+            android:text="按下时可以切换背景色和边框的Button"
             android:textColor="@android:color/white"
             app:normalColor="#03a9f4"
             app:pressedColor="@color/tiffany"

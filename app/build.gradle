@@ -48,4 +48,10 @@ dependencies {
     compile 'com.kyleduo.switchbutton:library:1.4.0'
     //  环形进度条
     compile 'com.github.jakob-grabner:Circle-Progress-View:v1.2.9'
+    //  上拉下拉果冻效果
+    compile 'homhomlin.lib:sldinglayout:0.5.0'
+    //  固定头部
+    compile 'com.github.w446108264:ScrollableLayout:1.0.3'
+    //  图片加载
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

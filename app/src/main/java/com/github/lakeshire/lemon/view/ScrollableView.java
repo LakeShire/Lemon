@@ -211,6 +211,9 @@ public class ScrollableView extends ScrollView {
             public void onAnimationEnd(Animator animation) {
                 isAnimating = false;
                 ((ViewGroup) ScrollableView.this.getParent()).removeView(ScrollableView.this);
+                if (cb != null) {
+                    cb.autoDismiss();
+                }
             }
 
             @Override

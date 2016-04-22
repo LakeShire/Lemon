@@ -3,4 +3,5 @@
     <item type="id" name="view_holder_position"/>
     <item type="id" name="view_holder_data"/>
     <item type="id" name="view_holder"/>
+    <item type="id" name="scrollview"/>
 </resources>

@@ -1,21 +1,26 @@
 package com.github.lakeshire.lemon.fragment.examples;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.lakeshire.lemon.R;
-import com.github.lakeshire.lemon.fragment.base.BasePagerFragment;
-import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
+import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+import com.github.lakeshire.lemon.util.BitmapUtil;
+import com.github.lakeshire.lemon.util.ImageUtil;
+import com.github.lakeshire.lemon.util.ScreenUtil;
+import com.github.lakeshire.lemon.view.BlurableImageView;
+import com.github.lakeshire.lemon.view.pulltozoom.PullToZoomListViewEx;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import kale.adapter.CommonAdapter;
 import kale.adapter.item.AdapterItem;
 
@@ -25,39 +30,46 @@ import kale.adapter.item.AdapterItem;
  * 方便的使用适配器，根据模型类型不同使用不同的布局
  *
  */
-public class CommonListFragment extends BasePagerFragment {
+public class PullToZoomFragment extends BaseFragment {
 
     private String title;
     private CommonAdapter<DemoModel> mAdapter;
     private ArrayList<DemoModel> data = new ArrayList();
-
-    @Bind(R.id.list)
-    ListView listView;
-
-    public CommonListFragment(String title) {
-        super();
-        this.title = title;
-    }
-
-    public CommonListFragment() {
-        super();
-    }
+    private PullToZoomListViewEx listView;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_common_list;
+        return R.layout.fragment_pulltozoom;
     }
 
     @Override
     public void initUi() {
         super.initUi();
-        mAdapter = getAdapter(data);
-        listView.setAdapter(mAdapter);
-    }
 
-    @Override
-    public ListView getListView() {
-        return listView;
+//        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        mAdapter = getAdapter(data);
+        listView = (PullToZoomListViewEx) find(R.id.listview);
+        listView.setAdapter(mAdapter);
+
+        int mScreenWidth = ScreenUtil.getScreenWidth(getActivity());
+        AbsListView.LayoutParams localObject = new AbsListView.LayoutParams(mScreenWidth, (int) (mScreenWidth * 16 / 16f));
+        listView.setHeaderLayoutParams(localObject);
+
+        BlurableImageView zoomView = (BlurableImageView) listView.getZoomView();
+        Bitmap bitmap = BitmapUtil.reduce(getContext(), R.drawable.image3, 256, 256);
+        zoomView.blur(new BitmapDrawable(getActivity().getResources(), bitmap), "blur", true);
+
+        View headerView = listView.getHeaderView();
+        ((TextView) headerView.findViewById(R.id.tv_user_name)).setText("Lakeshire");
+//        View header = View.inflate(getActivity(), R.layout.view_header, null);
+//        ImageView ivImage = (ImageView) header.findViewById(R.id.image);
+//        Bitmap bitmap = BitmapUtil.reduce(getContext(), R.drawable.image1, 256, 256);
+//        ivImage.setImageBitmap(bitmap);
+//        listView.setHeaderView(header);
+//        listView.setZoomView(ivImage);
+        ImageView ivAvatar = (ImageView) headerView.findViewById(R.id.iv_user_head);
+        ImageUtil.getInstance(getActivity()).setImage(ivAvatar, R.drawable.image2, 256, 256, true);
     }
 
     @Override
@@ -191,11 +203,5 @@ public class CommonListFragment extends BasePagerFragment {
             this.content = content;
             this.type = type;
         }
-    }
-
-    @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
-        ListView absListView = listView;
-        return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
     }
 }

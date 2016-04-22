@@ -9,4 +9,10 @@
     <dimen name="tag_vertical_spacing">6.0dip</dimen>
     <dimen name="common_margin">12.0dip</dimen>
     <dimen name="common_margin_10">10.0dip</dimen>
+
+    <dimen name="online_banner_height">150dp</dimen>
+    <dimen name="online_tabs_height">40dp</dimen>
+    <dimen name="banner_circle_radius">3dp</dimen>
+    <dimen name="banner_circle_space">8dp</dimen>
+    <dimen name="banner_circle_padding">8dp</dimen>
 </resources>

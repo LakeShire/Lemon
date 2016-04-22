@@ -85,4 +85,6 @@
     <color name="up_times_bg_red">#ffef805d</color>
     <color name="white_60_alpha">#99ffffff</color>
     <color name="white_80_alpha">#bbffffff</color>
+
+    <color name="transparent_white">#50ffffff</color>
 </resources>

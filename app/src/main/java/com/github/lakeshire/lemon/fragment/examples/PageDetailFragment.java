@@ -63,7 +63,7 @@ public class PageDetailFragment extends BasePullFragment {
                 mDetailView.setCallback(new ScrollableView.Callback() {
                     @Override
                     public void autoDismiss() {
-
+                        mDetailView = null;
                     }
 
                     @Override

@@ -16,9 +16,11 @@ import com.github.lakeshire.lemon.fragment.examples.MultiScrollFragment;
 import com.github.lakeshire.lemon.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemon.fragment.examples.PathMenuFragment;
 import com.github.lakeshire.lemon.fragment.examples.PullToZoomFragment;
+import com.github.lakeshire.lemon.fragment.examples.RecycleListFragment;
 import com.github.lakeshire.lemon.fragment.examples.SelectorFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlidingLayoutFragment;
+import com.github.lakeshire.lemon.fragment.examples.StaggeredFragment;
 import com.github.lakeshire.lemon.fragment.examples.SwitchButtonFragment;
 import com.github.lakeshire.lemon.fragment.examples.TagViewFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
@@ -65,6 +67,8 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("SlidingLayout", SlidingLayoutFragment.class));
         mDatas.add(new ExampleModel("嵌套滑动页面", MultiScrollFragment.class));
         mDatas.add(new ExampleModel("下拉缩放头部", PullToZoomFragment.class));
+        mDatas.add(new ExampleModel("RecyclerView", RecycleListFragment.class));
+        mDatas.add(new ExampleModel("瀑布流", StaggeredFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

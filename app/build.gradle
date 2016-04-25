@@ -54,4 +54,6 @@ dependencies {
     compile 'com.github.w446108264:ScrollableLayout:1.0.3'
     //  图片加载
     compile 'com.squareup.picasso:picasso:2.5.2'
+    //  RecyclerView的动画
+    compile 'com.github.gabrielemariotti.recyclerview:recyclerview-animators:0.3.0-SNAPSHOT@aar'
 }

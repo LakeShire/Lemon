@@ -1,24 +1,31 @@
 package com.github.lakeshire.lemon.fragment.examples;
 
-import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.lakeshire.lemon.R;
+import com.github.lakeshire.lemon.adapter.MyCommonRcvAdapter;
 import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
+import com.github.lakeshire.lemon.model.DemoModel;
+import com.github.lakeshire.lemon.view.recyclerview.DividerGridItemDecoration;
+import com.github.lakeshire.lemon.view.recyclerview.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import kale.adapter.CommonAdapter;
-import kale.adapter.CommonRcvAdapter;
-import kale.adapter.item.AdapterItem;
+import it.gmariotti.recyclerview.itemanimator.SlideInOutBottomItemAnimator;
+import it.gmariotti.recyclerview.itemanimator.SlideInOutLeftItemAnimator;
+import it.gmariotti.recyclerview.itemanimator.SlideInOutRightItemAnimator;
+import it.gmariotti.recyclerview.itemanimator.SlideInOutTopItemAnimator;
+import it.gmariotti.recyclerview.itemanimator.SlideScaleInOutRightItemAnimator;
 
 /**
  * 
@@ -28,11 +35,13 @@ import kale.adapter.item.AdapterItem;
  */
 public class RecycleListFragment extends BasePullFragment {
 
-    private CommonAdapter<DemoModel> mAdapter;
     private ArrayList<DemoModel> data = new ArrayList();
 
     @Bind(R.id.list)
     RecyclerView listView;
+    private DividerItemDecoration mItemDecoration;
+    private DividerGridItemDecoration mGridItemDecoration;
+    private MyCommonRcvAdapter mAdapter;
 
     @Override
     public int getLayoutId() {
@@ -42,21 +51,53 @@ public class RecycleListFragment extends BasePullFragment {
     @Override
     public void initUi() {
         super.initUi();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        layoutManager.setRecycleChildrenOnDetach(true);
+        setHasOptionsMenu(true);
+        initList();
+        mAdapter = getAdapter(data);
+        listView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickLitener(new MyCommonRcvAdapter.OnItemClickLitener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(), "click " + position, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Toast.makeText(getActivity(), "long click " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void initGrid() {
+//        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 4);
         listView.setLayoutManager(layoutManager);
-        listView.setAdapter(getAdapter(data));
+        listView.removeItemDecoration(mItemDecoration);
+        mGridItemDecoration = new DividerGridItemDecoration(getActivity());
+        listView.addItemDecoration(mGridItemDecoration);
+        listView.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    private void initList() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        listView.setLayoutManager(layoutManager);
+        listView.removeItemDecoration(mGridItemDecoration);
+        mItemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        listView.addItemDecoration(mItemDecoration);
+        listView.setItemAnimator(new DefaultItemAnimator());
     }
 
     @Override
     public void loadData() {
         super.loadData();
         data.clear();
-        data.add(new DemoModel("吉安娜", "text"));
-        data.add(new DemoModel("安度因", "text"));
+        data.add(new DemoModel("吉安娜", "image"));
+        data.add(new DemoModel("安度因", "image"));
         data.add(new DemoModel("乌瑟尔", "image"));
-        data.add(new DemoModel("瓦利拉", "button"));
-        data.add(new DemoModel("古尔丹", "text"));
+        data.add(new DemoModel("瓦利拉", "image"));
+        data.add(new DemoModel("古尔丹", "image"));
         data.add(new DemoModel("玛法里奥", "image"));
         listView.getAdapter().notifyDataSetChanged();
     }
@@ -67,112 +108,61 @@ public class RecycleListFragment extends BasePullFragment {
      *
      * 多种类型的type
      */
-    private CommonRcvAdapter<DemoModel> getAdapter(List<DemoModel> data) {
-        return new CommonRcvAdapter<DemoModel>(data) {
+    private MyCommonRcvAdapter getAdapter(List<DemoModel> data) {
+        return new MyCommonRcvAdapter(data);
+    }
 
-            @Override
-            public Object getItemType(DemoModel demoModel) {
-                return demoModel.type;
-            }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.recycler_view, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
-            @NonNull
-            @Override
-            public AdapterItem createItem(Object type) {
-                switch (((String) type)) {
-                    case "text":
-                        return new TextItem();
-                    case "button":
-                        return new ButtonItem();
-                    case "image":
-                        return new ImageItem();
-                    default:
-                        throw new IllegalArgumentException("不合法的type");
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_grid:
+                if (item.getTitle().equals("网格")) {
+                    item.setTitle("列表");
+                    initGrid();
+                } else {
+                    item.setTitle("网格");
+                    initList();
                 }
-            }
-        };
-    }
-
-    class TextItem implements AdapterItem<DemoModel> {
-
-        @Override
-        public int getLayoutResId() {
-            return R.layout.item_common_text;
+                break;
+            case R.id.action_add_default:
+                data.add(new DemoModel("Unknown", "image"));
+                mAdapter.notifyItemInserted(0);
+                break;
+            case R.id.action_add_slide_in_out:
+                break;
+            case R.id.action_add_slide_in_out_bottom:
+                listView.setItemAnimator(new SlideInOutBottomItemAnimator(listView));
+                data.add(new DemoModel("Unknown", "image"));
+                mAdapter.notifyItemInserted(0);
+                break;
+            case R.id.action_add_slide_in_out_left:
+                listView.setItemAnimator(new SlideInOutLeftItemAnimator(listView));
+                data.add(new DemoModel("Unknown", "image"));
+                mAdapter.notifyItemInserted(0);
+                break;
+            case R.id.action_add_slide_in_out_right:
+                listView.setItemAnimator(new SlideInOutRightItemAnimator(listView));
+                data.add(new DemoModel("Unknown", "image"));
+                mAdapter.notifyItemInserted(0);
+                break;
+            case R.id.action_add_slide_in_out_top:
+                listView.setItemAnimator(new SlideInOutTopItemAnimator(listView));
+                data.add(new DemoModel("Unknown", "image"));
+                mAdapter.notifyItemInserted(0);
+                break;
+            case R.id.action_add_slide_scale_in_out:
+                listView.setItemAnimator(new SlideScaleInOutRightItemAnimator(listView));
+                data.add(new DemoModel("Unknown", "image"));
+                mAdapter.notifyItemInserted(0);
+                break;
         }
-
-        TextView textView;
-
-        @Override
-        public void bindViews(View root) {
-            textView = (TextView) root.findViewById(R.id.textview);
-        }
-
-        @Override
-        public void setViews() { }
-
-        @Override
-        public void handleData(DemoModel model, int position) {
-            textView.setText(model.content);
-        }
-    }
-
-    class ImageItem implements AdapterItem<DemoModel> {
-
-        @Override
-        public int getLayoutResId() {
-            return R.layout.item_common_image;
-        }
-
-        ImageView imageView;
-
-        @Override
-        public void bindViews(View root) {
-            imageView = (ImageView) root.findViewById(R.id.imageview);
-        }
-
-        @Override
-        public void setViews() { }
-
-        @Override
-        public void handleData(DemoModel model, int position) {
-            imageView.setImageResource(R.drawable.path_music);
-        }
-    }
-
-    class ButtonItem implements AdapterItem<DemoModel> {
-
-        @Override
-        public int getLayoutResId() {
-            return R.layout.item_common_button;
-        }
-
-        Button button;
-
-        @Override
-        public void bindViews(View root) {
-            button = (Button) root.findViewById(R.id.button);
-        }
-
-        @Override
-        public void setViews() { }
-
-        @Override
-        public void handleData(DemoModel model, final int position) {
-            button.setText(model.content);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(), "点击了按钮: " + position, Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
-
-    class DemoModel {
-        public String content;
-        public String type;
-        public DemoModel(String content, String type) {
-            this.content = content;
-            this.type = type;
-        }
+        return super.onOptionsItemSelected(item);
     }
 }

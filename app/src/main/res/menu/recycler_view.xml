@@ -1,0 +1,53 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.creamframework.MainActivity" >
+
+    <item
+        android:id="@+id/action_grid"
+        android:orderInCategory="100"
+        android:title="网格"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_default"
+        android:orderInCategory="100"
+        android:title="添加(Default)"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_slide_in_out_left"
+        android:orderInCategory="100"
+        android:title="添加(SlideInOutLeftItemAnimator)"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_slide_in_out_right"
+        android:orderInCategory="100"
+        android:title="添加(SlideInOutRightItemAnimator )"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_slide_in_out_top"
+        android:orderInCategory="100"
+        android:title="添加(SlideInOutTopItemAnimator )"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_slide_in_out_bottom"
+        android:orderInCategory="100"
+        android:title="添加(SlideInOutBottomItemAnimator )"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_slide_in_out"
+        android:orderInCategory="100"
+        android:title="添加(ScaleInOutItemAnimator )"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_slide_scale_in_out"
+        android:orderInCategory="100"
+        android:title="添加(SlideScaleInOutRightItemAnimator  )"
+        app:showAsAction="never"/>
+</menu>

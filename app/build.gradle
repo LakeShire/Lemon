@@ -56,4 +56,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //  RecyclerView的动画
     compile 'com.github.gabrielemariotti.recyclerview:recyclerview-animators:0.3.0-SNAPSHOT@aar'
+    compile 'com.norbsoft.typefacehelper:library:0.9.0'
+    //  头部固定的列表
+    compile 'se.emilsjolander:stickylistheaders:2.7.0'
 }

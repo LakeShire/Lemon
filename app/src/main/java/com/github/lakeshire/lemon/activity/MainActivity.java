@@ -5,10 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.fragment.ExampleListFragment;
 import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+import com.norbsoft.typefacehelper.TypefaceHelper;
 
 import butterknife.ButterKnife;
 
@@ -17,8 +19,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
+
+        TypefaceHelper.typeface(this);
+
         ButterKnife.bind(this);
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container);

@@ -1,6 +1,7 @@
 package com.github.lakeshire.lemon.fragment;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -10,20 +11,24 @@ import com.github.lakeshire.lemon.adapter.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.ViewHolder;
 import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.fragment.examples.AnimatePieFragment;
+import com.github.lakeshire.lemon.fragment.examples.BlurFragment;
 import com.github.lakeshire.lemon.fragment.examples.CircleProgressFragment;
 import com.github.lakeshire.lemon.fragment.examples.MoreListViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.MultiScrollFragment;
 import com.github.lakeshire.lemon.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemon.fragment.examples.PathMenuFragment;
+import com.github.lakeshire.lemon.fragment.examples.PhotoViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.PullToZoomFragment;
 import com.github.lakeshire.lemon.fragment.examples.RecycleListFragment;
 import com.github.lakeshire.lemon.fragment.examples.SelectorFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlidingLayoutFragment;
 import com.github.lakeshire.lemon.fragment.examples.StaggeredFragment;
+import com.github.lakeshire.lemon.fragment.examples.StickyHeaderListFragment;
 import com.github.lakeshire.lemon.fragment.examples.SwitchButtonFragment;
 import com.github.lakeshire.lemon.fragment.examples.TagViewFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
+import com.norbsoft.typefacehelper.TypefaceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +74,9 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("下拉缩放头部", PullToZoomFragment.class));
         mDatas.add(new ExampleModel("RecyclerView", RecycleListFragment.class));
         mDatas.add(new ExampleModel("瀑布流", StaggeredFragment.class));
+        mDatas.add(new ExampleModel("PhotoView", PhotoViewFragment.class));
+        mDatas.add(new ExampleModel("头部固定的ListView", StickyHeaderListFragment.class));
+        mDatas.add(new ExampleModel("模糊", BlurFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 
@@ -111,5 +119,11 @@ public class ExampleListFragment extends BasePullFragment {
     @Override
     public boolean onBackPressed() {
         return false;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TypefaceHelper.typeface(getActivity());
     }
 }

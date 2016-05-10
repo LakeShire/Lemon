@@ -1,0 +1,107 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.github.lakeshire.lemon.view.verticalviewpager.VerticalViewPager
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="城市农夫有块田"
+        android:textColor="@color/tiffany"
+        android:gravity="center"
+        android:background="@drawable/background_custom"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="解忧杂货店"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="人类简史：从动物到上帝"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="岛上书店"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="从0到1：开启商业与未来的秘密"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="平面构成"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="世界现代设计史"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="世界平面设计史"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="飘"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="数据结构与算法分析"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="代码整洁之道"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:text="设计模式之禅"
+        android:textColor="@color/tiffany"
+        android:background="@drawable/background_custom"
+        android:gravity="center"/ -->
+</com.github.lakeshire.lemon.view.verticalviewpager.VerticalViewPager>
+</LinearLayout>

@@ -54,6 +54,33 @@ public class MultiScrollFragment extends BaseScrollFragment {
         View mFocusImageRoot = find(R.id.banner);
         mFocusPager = (ViewPager) mFocusImageRoot.findViewById(R.id.pager_focus);
         mFocusIndicator = (CirclePageIndicator) mFocusImageRoot.findViewById(R.id.indicator_dot);
+        mFocusIndicator.setVisibility(View.INVISIBLE);
+        mFocusPager.setPageMargin(16);
+        mFocusPager.setOffscreenPageLimit(1);
+        mFocusPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+                if (position < -1) {
+//                    page.setAlpha(0.5f);
+                    page.setRotationY(10);
+                    page.setScaleY(1);
+                } else if (position <= 1 && position >= -1) {
+                    if (position < 0) {
+//                        page.setAlpha((position + 1) * 0.5f + 0.5f);
+                        page.setRotationY(-position * 10);
+                        page.setScaleY(-position * 0.1f + 0.9f);
+                    } else {
+//                        page.setAlpha(1 - position * 0.5f);
+                        page.setRotationY(-position * 10);
+                        page.setScaleY(position * 0.1f + 0.9f);
+                    }
+                } else {
+//                    page.setAlpha(0.5f);
+                    page.setRotationY(-10);
+                    page.setScaleY(1);
+                }
+            }
+        });
 
         int width = ScreenUtil.getScreenWidth(getActivity());
         int height = (int) (width * (1080 / 1920f));

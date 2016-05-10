@@ -3,7 +3,8 @@ package com.github.lakeshire.lemon.adapter;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +14,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @author louis.liu
  */
-public class PagerAdapter extends FragmentPagerAdapter {
+public class PagerAdapter extends FragmentStatePagerAdapter {
 
     protected Fragment[] mFragments;
     protected String[] mTitles;
@@ -73,5 +74,11 @@ public class PagerAdapter extends FragmentPagerAdapter {
     @Override
     public Parcelable saveState() {
         return null;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+//        ((Fragment) object).onDestroy();
     }
 }

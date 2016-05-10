@@ -6,12 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:clipChildren="false"
     android:gravity="center_horizontal" >
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager_focus"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:layout_marginRight="48dp"
+        android:layout_marginLeft="48dp"
         android:layout_centerHorizontal="true"
         android:fadingEdge="none"
         android:overScrollMode="never"/>

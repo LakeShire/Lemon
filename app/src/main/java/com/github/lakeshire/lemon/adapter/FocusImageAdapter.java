@@ -6,6 +6,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.github.lakeshire.lemon.model.ImageHolder;
 import com.github.lakeshire.lemon.util.ImageUtil;
@@ -91,6 +92,8 @@ public class FocusImageAdapter<T extends ImageHolder> extends PagerAdapter {
         if (iv.getParent() != null && iv.getParent() instanceof ViewGroup) {
             ((ViewGroup) iv.getParent()).removeView(iv);
         }
+//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) iv.getLayoutParams();
+//        lp.addRule(RelativeLayout.CENTER_IN_PARENT);
         container.addView(iv);
         return iv;
     }
@@ -118,7 +121,8 @@ public class FocusImageAdapter<T extends ImageHolder> extends PagerAdapter {
             ti.setScaleType(ImageView.ScaleType.FIT_XY);
             int width = ScreenUtil.getScreenWidth((Activity) context);
             int height = (int) (width * (1080 / 1920f));
-            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(width, height);
+//            ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(width, height);
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(width, height);
             ti.setLayoutParams(lp);
             focusImageViews.add(ti);
         }
@@ -135,6 +139,10 @@ public class FocusImageAdapter<T extends ImageHolder> extends PagerAdapter {
                 imgView.setBackgroundDrawable(null);
             }
         }
+    }
+
+    public Object getItem(int position) {
+        return focusImageViews.get(position % focusImageViews.size());
     }
 }
 

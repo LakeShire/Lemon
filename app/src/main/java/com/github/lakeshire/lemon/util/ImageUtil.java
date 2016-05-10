@@ -34,13 +34,14 @@ public class ImageUtil {
 
     private ImageUtil(Context context) {
         picasso = new Picasso.Builder(context).memoryCache(new LruCache(calculateMemoryCacheSize(context))).build();
+        picasso.setLoggingEnabled(true);
     }
 
     static int calculateMemoryCacheSize(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         int memoryClass = 4;
         if (am != null) {
-            memoryClass = am.getMemoryClass() / 7 > 5 ? 5 : am.getMemoryClass() / 7;
+            memoryClass = am.getMemoryClass() / 7 > 5 ? 5 : am.getMemoryClass() / 15;
         }
         return 1024 * 1024 * memoryClass;
     }

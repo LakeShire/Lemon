@@ -25,8 +25,10 @@ import com.github.lakeshire.lemon.fragment.examples.SlideListViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.SlidingLayoutFragment;
 import com.github.lakeshire.lemon.fragment.examples.StaggeredFragment;
 import com.github.lakeshire.lemon.fragment.examples.StickyHeaderListFragment;
+import com.github.lakeshire.lemon.fragment.examples.StringListFragment;
 import com.github.lakeshire.lemon.fragment.examples.SwitchButtonFragment;
 import com.github.lakeshire.lemon.fragment.examples.TagViewFragment;
+import com.github.lakeshire.lemon.fragment.examples.VerticalViewPagerFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
@@ -45,6 +47,7 @@ public class ExampleListFragment extends BasePullFragment {
     @Override
     public void initUi() {
         super.initUi();
+
         mAdapter = new ExampleAdapter(getActivity(), mDatas, R.layout.item_example);
         mLvExample.setAdapter(mAdapter);
         mLvExample.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,6 +80,8 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("PhotoView", PhotoViewFragment.class));
         mDatas.add(new ExampleModel("头部固定的ListView", StickyHeaderListFragment.class));
         mDatas.add(new ExampleModel("模糊", BlurFragment.class));
+        mDatas.add(new ExampleModel("竖直方向ViewPager", VerticalViewPagerFragment.class));
+        mDatas.add(new ExampleModel("歌词效果", StringListFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

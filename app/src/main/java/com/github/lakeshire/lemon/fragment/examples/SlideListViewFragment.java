@@ -18,6 +18,7 @@ import com.github.lakeshire.lemon.view.LoadMoreListView;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 import com.github.lakeshire.lemon.view.slidelistview.SlideListView;
 import com.github.ybq.android.spinkit.style.FadingCircle;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,7 @@ public class SlideListViewFragment extends BasePullFragment {
                 @Override
                 public void onSuccess(String response) {
                     Response res = JSON.parseObject(response, Response.class);
+                    Logger.d(response);
                     DataWrapper wrapper = JSON.parseObject(res.getResult(), DataWrapper.class);
                     mPageSize = Integer.parseInt(wrapper.getNum());
                     mTotalPage = (Integer.parseInt(wrapper.getTotalCount()) / mPageSize) + 1;

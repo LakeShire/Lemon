@@ -212,7 +212,7 @@ public class StringListFragment extends BasePullFragment {
             tvTitle.setText(item.content);
             if (gap != -1) {
                 tvTitle.setAlpha(gap * item.level);
-                tvTitle.setRotationX(rotateGap * (level - item.position));
+//                tvTitle.setRotationX(rotateGap * (level - item.position));
             }
         }
 

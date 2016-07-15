@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.github.lakeshire.lemon.R;
 import com.github.lakeshire.lemon.fragment.base.BaseFragment;
 import com.github.lakeshire.lemon.util.BitmapUtil;
-import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 
@@ -25,12 +24,12 @@ public class SimpleContentFragment extends BaseFragment {
     private String mTitle;
     private int mRes;
 
-    @Bind(R.id.iv_pic)
+//    @Bind(R.id.iv_pic)
     ImageView mIvPic;
 
     @Bind(R.id.tv_title)
     TextView mTvTitle;
-    private Bitmap mBitmap;
+//    private Bitmap mBitmap;
 
     public SimpleContentFragment(String title) {
         super();
@@ -50,18 +49,21 @@ public class SimpleContentFragment extends BaseFragment {
     @Override
     public void initUi() {
         super.initUi();
+
+        mIvPic = (ImageView) find(R.id.iv_pic);
+
 //        ImageUtil.getInstance(getActivity()).setImage(mIvPic, R.drawable.image1, 0, 0, false);
         new AsyncTask<Void, Void, Bitmap>() {
 
             @Override
             protected Bitmap doInBackground(Void... params) {
-                mBitmap = BitmapUtil.reduce(getActivity(), R.drawable.image1, 1024, 1024);
+                Bitmap mBitmap = BitmapUtil.reduce(getActivity(), R.drawable.image1, 1024, 1024);
                 return mBitmap;
             }
 
             @Override
             protected void onPostExecute(Bitmap bitmap) {
-                mIvPic.setImageBitmap(mBitmap);
+                mIvPic.setImageBitmap(bitmap);
             }
         }.execute();
 
@@ -71,10 +73,10 @@ public class SimpleContentFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mBitmap != null) {
-            mIvPic.setImageBitmap(null);
-            mBitmap.recycle();
-            mBitmap = null;
-        }
+//        if (mBitmap != null) {
+//            mIvPic.setImageBitmap(null);
+//            mBitmap.recycle();
+//            mBitmap = null;
+//        }
     }
 }

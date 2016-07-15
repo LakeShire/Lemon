@@ -11,11 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.lakeshire.lemon.R;
-import com.github.lakeshire.lemon.fragment.base.BasePagerFragment;
-import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
+import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+import com.github.lakeshire.lemon.view.PullToZoomView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import kale.adapter.CommonAdapter;
@@ -27,7 +29,7 @@ import kale.adapter.item.AdapterItem;
  * 方便的使用适配器，根据模型类型不同使用不同的布局
  *
  */
-public class CommonListFragment extends BasePagerFragment {
+public class CommonListFragment2 extends BaseFragment {
 
     private String title;
     private CommonAdapter<DemoModel> mAdapter;
@@ -36,12 +38,12 @@ public class CommonListFragment extends BasePagerFragment {
     @Bind(R.id.list)
     ListView listView;
 
-    public CommonListFragment(String title) {
+    public CommonListFragment2(String title) {
         super();
         this.title = title;
     }
 
-    public CommonListFragment() {
+    public CommonListFragment2() {
         super();
     }
 
@@ -55,11 +57,6 @@ public class CommonListFragment extends BasePagerFragment {
         super.initUi();
         mAdapter = getAdapter(data);
         listView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public ListView getListView() {
-        return listView;
     }
 
     @Override
@@ -121,7 +118,6 @@ public class CommonListFragment extends BasePagerFragment {
             }
         };
     }
-
 
     class TextItem implements AdapterItem<DemoModel> {
 
@@ -207,13 +203,6 @@ public class CommonListFragment extends BasePagerFragment {
         }
     }
 
-    @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
-//        ListView absListView = listView;
-//        return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
-        return false;
-    }
-
     public boolean checkTop() {
         ListView absListView = listView;
         return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
@@ -222,5 +211,25 @@ public class CommonListFragment extends BasePagerFragment {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void scroll(int y) {
         listView.scrollListBy(y);
+    }
+
+    public void onRefresh(final PullToZoomView ptrView) {
+        Toast.makeText(getActivity(), "刷新页面", Toast.LENGTH_SHORT).show();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ptrView.onRefreshCompleted();
+
+                        }
+                    });
+                }
+            }
+        };
+        Timer timer = new Timer();
+        timer.schedule(task, 1000);
     }
 }

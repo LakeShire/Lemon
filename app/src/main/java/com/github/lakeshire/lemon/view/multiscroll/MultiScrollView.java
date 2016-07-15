@@ -16,6 +16,7 @@ import android.widget.Scroller;
 import com.astuetz.PagerSlidingTabStrip;
 import com.github.lakeshire.lemon.adapter.PagerAdapter;
 import com.github.lakeshire.lemon.fragment.base.BasePagerFragment;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,11 @@ public class MultiScrollView extends RelativeLayout {
 	 */
 	private boolean mAllShow = true;
 
+	private int measureTimes = 0;
+	private long measureCost = 0;
+	private int layoutTimes = 0;
+	private long layoutCost = 0;
+
 	public MultiScrollView(Context context) {
 		super(context);
 	}
@@ -113,6 +119,8 @@ public class MultiScrollView extends RelativeLayout {
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		mTotalHeight = 0;
 
+		long start = System.currentTimeMillis();
+
 		// 遍历所有子视图
 		int childCount = getChildCount();
 		for (int i = 0; i < childCount; i++) {
@@ -127,6 +135,11 @@ public class MultiScrollView extends RelativeLayout {
 
 			mTotalHeight += measureHeight;
 		}
+
+		long end = System.currentTimeMillis();
+		layoutTimes++;
+		layoutCost += (end - start);
+		Logger.d("call onLayout " + layoutTimes + " times, total " + layoutCost + "ms");
 	}
 
 	/**
@@ -135,6 +148,8 @@ public class MultiScrollView extends RelativeLayout {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+		long start = System.currentTimeMillis();
 
 		int measureWidth = measureWidth(widthMeasureSpec);
 		int measureHeight = measureHeight(heightMeasureSpec);
@@ -173,6 +188,11 @@ public class MultiScrollView extends RelativeLayout {
 			}
 			firstMeasure = false;
 		}
+
+		long end = System.currentTimeMillis();
+		measureTimes++;
+		measureCost += (end - start);
+		Logger.d("call onMeasure " + measureTimes + " times, total " + measureCost + "ms");
 	}
 
 	void measureChildBeforeLayout(View child, int childIndex,

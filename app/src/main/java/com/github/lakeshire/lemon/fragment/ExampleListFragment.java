@@ -29,6 +29,7 @@ import com.github.lakeshire.lemon.fragment.examples.StringListFragment;
 import com.github.lakeshire.lemon.fragment.examples.SwitchButtonFragment;
 import com.github.lakeshire.lemon.fragment.examples.TagViewFragment;
 import com.github.lakeshire.lemon.fragment.examples.VerticalViewPagerFragment;
+import com.github.lakeshire.lemon.fragment.examples.MyPullToZoomFragment;
 import com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
@@ -82,6 +83,7 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("模糊", BlurFragment.class));
         mDatas.add(new ExampleModel("竖直方向ViewPager", VerticalViewPagerFragment.class));
         mDatas.add(new ExampleModel("歌词效果", StringListFragment.class));
+        mDatas.add(new ExampleModel("ViewDragHelper", MyPullToZoomFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

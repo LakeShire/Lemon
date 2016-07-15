@@ -1,5 +1,6 @@
 package com.github.lakeshire.lemon.fragment.base;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,8 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.lakeshire.lemon.activity.BaseActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -17,7 +22,9 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends Fragment {
 
-    protected View mContainerView;
+    protected ViewGroup mContainerView;
+    private List<ImageView> mImageViews = new ArrayList<>();
+    private List<Bitmap> mBitmaps = new ArrayList<>();
 
     public void startFragment(Class<?> clazz) {
         ((BaseActivity) getActivity()).startFragment(clazz);
@@ -30,7 +37,7 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mContainerView = inflater.inflate(getLayoutId(), container, false);
+        mContainerView = (ViewGroup) inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, mContainerView);
         initUi();
         return mContainerView;
@@ -57,11 +64,23 @@ public abstract class BaseFragment extends Fragment {
     public abstract int getLayoutId();
 
     protected View find(int res) {
-        return mContainerView.findViewById(res);
+        View view = mContainerView.findViewById(res);
+        if (view instanceof ImageView) {
+            mImageViews.add((ImageView) view);
+        }
+        return view;
     }
 
     public boolean onBackPressed() {
         endFragment();
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        for (ImageView iv : mImageViews) {
+            iv.setImageBitmap(null);
+        }
+        super.onDestroy();
     }
 }

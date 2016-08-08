@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout
+<com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ptr_frame"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
@@ -62,4 +62,4 @@
             app:pressedStrokeColor="@color/white"
             app:normalStrokeWidth="2dp"/>
     </LinearLayout>
-</com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout>
+</com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout>

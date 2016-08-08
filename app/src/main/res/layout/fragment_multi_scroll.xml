@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
-    <com.github.lakeshire.lemon.view.multiscroll.MultiScrollView
+    <com.github.lakeshire.lemonapp.view.multiscroll.MultiScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_view"
@@ -30,5 +30,5 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent" 
 	        android:layout_below="@id/tabs"/>   
-    </com.github.lakeshire.lemon.view.multiscroll.MultiScrollView>
+    </com.github.lakeshire.lemonapp.view.multiscroll.MultiScrollView>
 </LinearLayout>

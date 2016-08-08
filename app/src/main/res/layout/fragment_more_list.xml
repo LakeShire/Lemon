@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout
+<com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ptr_frame"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
@@ -11,9 +11,9 @@
     cube_ptr:ptr_duration_to_close_header="2000"
     cube_ptr:ptr_keep_header_when_refresh="true"
     cube_ptr:ptr_pull_to_fresh="true">
-    <com.github.lakeshire.lemon.view.morelistview.MoreListView
+    <com.github.lakeshire.lemonapp.view.morelistview.MoreListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.github.lakeshire.lemon.view.morelistview.MoreListView>
-</com.github.lakeshire.lemon.view.pulltofresh.EnhancePtrFrameLayout>
+    </com.github.lakeshire.lemonapp.view.morelistview.MoreListView>
+</com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout>

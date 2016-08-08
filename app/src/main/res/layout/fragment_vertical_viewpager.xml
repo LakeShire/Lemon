@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.github.lakeshire.lemon.view.verticalviewpager.VerticalViewPager
+    <com.github.lakeshire.lemonapp.view.verticalviewpager.VerticalViewPager
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -103,5 +103,5 @@
         android:textColor="@color/tiffany"
         android:background="@drawable/background_custom"
         android:gravity="center"/ -->
-</com.github.lakeshire.lemon.view.verticalviewpager.VerticalViewPager>
+</com.github.lakeshire.lemonapp.view.verticalviewpager.VerticalViewPager>
 </LinearLayout>

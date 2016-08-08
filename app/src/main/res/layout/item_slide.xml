@@ -11,7 +11,7 @@
         android:gravity="center"
         android:typeface="monospace"
         android:text="title"/>
-    <com.github.lakeshire.lemon.view.slidelistview.ScrollItemView
+    <com.github.lakeshire.lemonapp.view.slidelistview.ScrollItemView
         android:id="@+id/item_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:textColor="@color/black"
                 android:typeface="monospace"/>
         </LinearLayout>
-    </com.github.lakeshire.lemon.view.slidelistview.ScrollItemView>
+    </com.github.lakeshire.lemonapp.view.slidelistview.ScrollItemView>
     <CheckBox
         android:layout_alignParentRight="true"
         android:id="@id/check"

@@ -56,7 +56,7 @@
             android:layout_height="32dp"
             android:layout_centerInParent="true"/>
 
-        <com.github.lakeshire.lemon.view.DraggableCircle
+        <com.github.lakeshire.lemonapp.view.DraggableCircle
             android:id="@+id/circle"
             android:layout_width="128dp"
             android:layout_height="128dp"

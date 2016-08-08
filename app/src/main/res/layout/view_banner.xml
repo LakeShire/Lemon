@@ -20,7 +20,7 @@
         android:fadingEdge="none"
         android:overScrollMode="never"/>
 
-    <com.github.lakeshire.lemon.view.pageindicator.CirclePageIndicator
+    <com.github.lakeshire.lemonapp.view.pageindicator.CirclePageIndicator
         android:id="@+id/indicator_dot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

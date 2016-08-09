@@ -12,7 +12,7 @@
     cube_ptr:ptr_keep_header_when_refresh="true"
     cube_ptr:ptr_pull_to_fresh="true">
 
-    <com.github.lakeshire.lemonapp.view.slidelistview.SlideListView
+    <com.github.lakeshire.slidelistview.SlideListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/slide_list">
@@ -28,7 +28,7 @@
                 android:gravity="center"
                 android:text="名称"
                 android:textSize="18sp"/>
-            <com.github.lakeshire.lemonapp.view.slidelistview.ScrollItemView
+            <com.github.lakeshire.slidelistview.ScrollItemView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scroll_title"
@@ -81,7 +81,7 @@
                         android:layout_height="48dp"
                         android:gravity="center"/>
                 </LinearLayout>
-            </com.github.lakeshire.lemonapp.view.slidelistview.ScrollItemView>
+            </com.github.lakeshire.slidelistview.ScrollItemView>
             <CheckBox
                 android:layout_alignParentRight="true"
                 android:id="@id/block"
@@ -95,5 +95,5 @@
             android:layout_height="match_parent"
             android:id="@+id/scroll_list">
         </com.github.lakeshire.lemonapp.view.LoadMoreListView>
-    </com.github.lakeshire.lemonapp.view.slidelistview.SlideListView>
+    </com.github.lakeshire.slidelistview.SlideListView>
 </com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout>

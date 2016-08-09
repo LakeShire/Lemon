@@ -15,7 +15,6 @@ import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -26,7 +25,6 @@ public class StickyHeaderListFragment extends BasePullFragment {
     private MyAdapter mAdapter;
     private ArrayList<DemoModel> data = new ArrayList();
 
-    @Bind(R.id.list)
     ExpandableStickyListHeadersListView listView;
 
     public StickyHeaderListFragment() {
@@ -43,6 +41,9 @@ public class StickyHeaderListFragment extends BasePullFragment {
         super.initUi();
 //        mAdapter = getAdapter(data);
         mAdapter = new MyAdapter(getActivity(), data);
+
+        listView = (ExpandableStickyListHeadersListView) find(R.id.list);
+
         listView.setAdapter(mAdapter);
         listView.setOnHeaderClickListener(new StickyListHeadersListView.OnHeaderClickListener() {
             @Override

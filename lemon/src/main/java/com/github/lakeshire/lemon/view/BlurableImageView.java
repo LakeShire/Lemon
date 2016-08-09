@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view;
+package com.github.lakeshire.lemon.view;
 
 
 import android.content.Context;

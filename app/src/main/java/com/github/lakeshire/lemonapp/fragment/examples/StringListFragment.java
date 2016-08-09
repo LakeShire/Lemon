@@ -11,17 +11,15 @@ import android.widget.TextView;
 import com.github.lakeshire.lemon.adapter.base.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.base.ViewHolder;
 import com.github.lakeshire.lemon.util.BitmapUtil;
+import com.github.lakeshire.lemon.view.BlurableImageView;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
-import com.github.lakeshire.lemonapp.view.BlurableImageView;
 import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import butterknife.Bind;
 
 /**
  *
@@ -34,7 +32,6 @@ public class StringListFragment extends BasePullFragment {
     private StringAdapter mAdapter;
     private ArrayList<DemoModel> data = new ArrayList();
 
-    @Bind(R.id.list)
     ListView listView;
     private int mFocusItem;
     private int mMaxLevel;
@@ -50,6 +47,7 @@ public class StringListFragment extends BasePullFragment {
     @Override
     public void initUi() {
 //        super.initUi();
+        listView = (ListView) find(R.id.list);
         BlurableImageView biv = (BlurableImageView) find(R.id.image);
         Bitmap bitmap = BitmapUtil.reduce(getContext(), R.drawable.image4, 256, 256);
         biv.blur(new BitmapDrawable(getActivity().getResources(), bitmap), "blur", true);

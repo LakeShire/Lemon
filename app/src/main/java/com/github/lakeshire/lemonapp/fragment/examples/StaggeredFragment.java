@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.adapter.StaggeredHomeAdapter;
+import com.github.lakeshire.recyclerview.StaggeredHomeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

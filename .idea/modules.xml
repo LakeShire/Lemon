@@ -7,7 +7,9 @@
       <module fileurl="file://$PROJECT_DIR$/lemon.iml" filepath="$PROJECT_DIR$/lemon.iml" />
       <module fileurl="file://$PROJECT_DIR$/lemon/lemon-lemon.iml" filepath="$PROJECT_DIR$/lemon/lemon-lemon.iml" />
       <module fileurl="file://$PROJECT_DIR$/pageindicator/pageindicator.iml" filepath="$PROJECT_DIR$/pageindicator/pageindicator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoview/photoview.iml" filepath="$PROJECT_DIR$/photoview/photoview.iml" />
       <module fileurl="file://$PROJECT_DIR$/pulltozoomview/pulltozoomview.iml" filepath="$PROJECT_DIR$/pulltozoomview/pulltozoomview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerview/recyclerview.iml" filepath="$PROJECT_DIR$/recyclerview/recyclerview.iml" />
       <module fileurl="file://$PROJECT_DIR$/slidelistview/slidelistview.iml" filepath="$PROJECT_DIR$/slidelistview/slidelistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/stickyheaderlayout/stickyheaderlayout.iml" filepath="$PROJECT_DIR$/stickyheaderlayout/stickyheaderlayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/tagview/tagview.iml" filepath="$PROJECT_DIR$/tagview/tagview.iml" />

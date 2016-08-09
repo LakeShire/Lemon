@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.recyclerview;
+package com.github.lakeshire.recyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

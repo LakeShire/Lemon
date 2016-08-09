@@ -5,11 +5,11 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 
+import com.github.lakeshire.lemon.adapter.FocusImageAdapter;
+import com.github.lakeshire.lemon.model.ImageHolder;
 import com.github.lakeshire.lemon.util.ScreenUtil;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.adapter.FocusImageAdapter;
 import com.github.lakeshire.lemonapp.fragment.base.BaseScrollFragment;
-import com.github.lakeshire.lemonapp.model.ImageHolder;
 import com.github.lakeshire.lemonapp.util.FixedSpeedScroller;
 import com.github.lakeshire.lemonapp.util.ViewUtil;
 import com.github.lakeshire.pageindicator.CirclePageIndicator;

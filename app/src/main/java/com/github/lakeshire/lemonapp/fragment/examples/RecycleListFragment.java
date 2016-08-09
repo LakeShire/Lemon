@@ -14,8 +14,8 @@ import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.adapter.MyCommonRcvAdapter;
 import com.github.lakeshire.lemonapp.model.DemoModel;
-import com.github.lakeshire.lemonapp.view.recyclerview.DividerGridItemDecoration;
-import com.github.lakeshire.lemonapp.view.recyclerview.DividerItemDecoration;
+import com.github.lakeshire.recyclerview.DividerGridItemDecoration;
+import com.github.lakeshire.recyclerview.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;

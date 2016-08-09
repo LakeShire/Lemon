@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.photoview;
+package com.github.lakeshire.photoview;
 
 import android.graphics.RectF;
 import android.view.GestureDetector;

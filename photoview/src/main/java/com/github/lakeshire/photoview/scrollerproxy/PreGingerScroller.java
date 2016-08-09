@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.github.lakeshire.lemonapp.view.photoview.scrollerproxy;
+package com.github.lakeshire.photoview.scrollerproxy;
 
 import android.content.Context;
 import android.widget.Scroller;

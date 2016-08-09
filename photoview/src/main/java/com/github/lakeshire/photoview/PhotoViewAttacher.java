@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.github.lakeshire.lemonapp.view.photoview;
+package com.github.lakeshire.photoview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -35,9 +35,9 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.github.lakeshire.lemonapp.view.photoview.gestures.OnGestureListener;
-import com.github.lakeshire.lemonapp.view.photoview.gestures.VersionedGestureDetector;
-import com.github.lakeshire.lemonapp.view.photoview.scrollerproxy.ScrollerProxy;
+import com.github.lakeshire.photoview.gestures.OnGestureListener;
+import com.github.lakeshire.photoview.gestures.VersionedGestureDetector;
+import com.github.lakeshire.photoview.scrollerproxy.ScrollerProxy;
 
 import java.lang.ref.WeakReference;
 
@@ -121,7 +121,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, OnGe
 
     // Gesture Detectors
     private GestureDetector mGestureDetector;
-    private com.github.lakeshire.lemonapp.view.photoview.gestures.GestureDetector mScaleDragDetector;
+    private com.github.lakeshire.photoview.gestures.GestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
     private final Matrix mBaseMatrix = new Matrix();

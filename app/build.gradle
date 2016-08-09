@@ -66,4 +66,5 @@ dependencies {
     compile project(path: ':extralistview')
     compile project(path: ':lemon')
     compile project(path: ':pageindicator')
+    compile project(path: ':photoview')
 }

@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.photoview.gestures;
+package com.github.lakeshire.photoview.gestures;
 
 /*******************************************************************************
  * Copyright 2011, 2012 Chris Banes.

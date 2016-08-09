@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.github.lakeshire.lemonapp.view.photoview.gestures;
+package com.github.lakeshire.photoview.gestures;
 
 import android.annotation.TargetApi;
 import android.content.Context;

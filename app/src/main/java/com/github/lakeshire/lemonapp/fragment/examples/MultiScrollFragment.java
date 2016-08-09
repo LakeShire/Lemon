@@ -12,7 +12,7 @@ import com.github.lakeshire.lemonapp.fragment.base.BaseScrollFragment;
 import com.github.lakeshire.lemonapp.model.ImageHolder;
 import com.github.lakeshire.lemonapp.util.FixedSpeedScroller;
 import com.github.lakeshire.lemonapp.util.ViewUtil;
-import com.github.lakeshire.lemonapp.view.pageindicator.CirclePageIndicator;
+import com.github.lakeshire.pageindicator.CirclePageIndicator;
 import com.github.lakeshire.stickyheaderlayout.PageInfo;
 import com.github.lakeshire.stickyheaderlayout.PagerAdapter;
 
@@ -60,7 +60,7 @@ public class MultiScrollFragment extends BaseScrollFragment {
         View mFocusImageRoot = find(R.id.banner);
         mFocusPager = (ViewPager) mFocusImageRoot.findViewById(R.id.pager_focus);
         mFocusIndicator = (CirclePageIndicator) mFocusImageRoot.findViewById(R.id.indicator_dot);
-        mFocusIndicator.setVisibility(View.INVISIBLE);
+        mFocusIndicator.setExtraSpacing(24.0f);
         mFocusPager.setPageMargin(16);
         mFocusPager.setOffscreenPageLimit(1);
         mFocusPager.setPageTransformer(false, new ViewPager.PageTransformer() {

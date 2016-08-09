@@ -10,9 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.adapter.MyCommonRcvAdapter;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.model.DemoModel;
 import com.github.lakeshire.lemonapp.view.recyclerview.DividerGridItemDecoration;
 import com.github.lakeshire.lemonapp.view.recyclerview.DividerItemDecoration;

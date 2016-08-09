@@ -6,8 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 
 public class PagerFragment extends BasePullFragment {
 

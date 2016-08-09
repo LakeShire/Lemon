@@ -10,15 +10,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.lakeshire.lemon.fragment.base.BaseFragment;
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import com.github.lakeshire.stickyheaderlayout.StickyHeaderLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import kale.adapter.CommonAdapter;
 import kale.adapter.item.AdapterItem;
 
@@ -203,7 +202,7 @@ public class CommonListFragment extends BasePullFragment implements StickyHeader
     }
 
     @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+    protected boolean checkCanRefresh(PtrFrameLayout frame, View content, View header) {
 //        ListView absListView = listView;
 //        return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
         return false;

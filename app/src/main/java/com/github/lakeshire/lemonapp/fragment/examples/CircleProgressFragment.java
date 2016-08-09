@@ -10,9 +10,8 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -23,6 +22,7 @@ import at.grabner.circleprogress.AnimationStateChangedListener;
 import at.grabner.circleprogress.CircleProgressView;
 import at.grabner.circleprogress.TextMode;
 import at.grabner.circleprogress.UnitPosition;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Created by nali on 2016/4/21.
@@ -45,7 +45,7 @@ public class CircleProgressFragment extends BasePullFragment {
     Spinner mSpinner;
 
     @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+    protected boolean checkCanRefresh(PtrFrameLayout frame, View content, View header) {
         return mScrollView.getScrollY() <= 0;
     }
 

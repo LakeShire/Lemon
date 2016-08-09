@@ -6,22 +6,23 @@ import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.github.lakeshire.extralistview.ExtraListView;
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.util.HttpUtil;
 import com.github.lakeshire.lemon.view.LoadMoreListView;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.adapter.morelistview.MoreItemAdapter;
 import com.github.lakeshire.lemonapp.adapter.morelistview.MyMoreItemAdapter;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.model.DataWrapper;
 import com.github.lakeshire.lemonapp.model.MoreModel;
 import com.github.lakeshire.lemonapp.model.Response;
 import com.github.lakeshire.lemonapp.model.Stock;
 import com.github.lakeshire.lemonapp.model.slidelistview.Model;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import com.github.ybq.android.spinkit.style.FadingCircle;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class MoreListViewFragment extends BasePullFragment {
 
@@ -150,7 +151,7 @@ public class MoreListViewFragment extends BasePullFragment {
     }
 
     @Override
-    protected void onRefresh(EnhancePtrFrameLayout frame) {
+    protected void onRefresh(PtrFrameLayout frame) {
         super.onRefresh(frame);
         refresh();
     }
@@ -164,7 +165,7 @@ public class MoreListViewFragment extends BasePullFragment {
     }
 
     @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+    protected boolean checkCanRefresh(PtrFrameLayout frame, View content, View header) {
         ListView absListView = mListView;
         return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
     }

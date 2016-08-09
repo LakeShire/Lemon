@@ -1,7 +1,7 @@
 package com.github.lakeshire.lemonapp.fragment.examples;
 
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 
 /**
  * Created by nali on 2016/4/21.

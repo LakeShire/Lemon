@@ -6,9 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemon.util.ScreenUtil;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.view.ScrollableView;
 
 public class PageDetailFragment extends BasePullFragment {

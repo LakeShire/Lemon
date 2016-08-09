@@ -8,16 +8,16 @@ import android.widget.ListView;
 
 import com.github.lakeshire.lemon.adapter.base.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.base.ViewHolder;
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.AnimatePieFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.CircleProgressFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.MoreListViewFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.MultiScrollFragment;
-import com.github.lakeshire.lemonapp.fragment.examples.PullToZoomFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.PathMenuFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.PhotoViewFragment;
+import com.github.lakeshire.lemonapp.fragment.examples.PullToZoomFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.RecycleListFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.SelectorFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.SlideListViewFragment;
@@ -28,11 +28,12 @@ import com.github.lakeshire.lemonapp.fragment.examples.StringListFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.SwitchButtonFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.TagViewFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.VerticalViewPagerFragment;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import com.norbsoft.typefacehelper.TypefaceHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 public class ExampleListFragment extends BasePullFragment {
 
@@ -108,7 +109,7 @@ public class ExampleListFragment extends BasePullFragment {
     }
 
     @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+    protected boolean checkCanRefresh(PtrFrameLayout frame, View content, View header) {
         ListView absListView = mLvExample;
         boolean canRefresh =  !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
         l("canRefresh: " + canRefresh);

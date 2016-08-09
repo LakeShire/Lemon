@@ -1,6 +1,7 @@
 package com.github.lakeshire.lemonapp.fragment.examples;
 
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
+
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 
 public class VerticalViewPagerFragment extends BasePullFragment {
     @Override

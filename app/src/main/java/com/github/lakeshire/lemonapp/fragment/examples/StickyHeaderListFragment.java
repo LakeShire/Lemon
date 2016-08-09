@@ -8,13 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import se.emilsjolander.stickylistheaders.ExpandableStickyListHeadersListView;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -161,7 +161,7 @@ public class StickyHeaderListFragment extends BasePullFragment {
     }
 
     @Override
-    protected boolean checkCanRefresh(EnhancePtrFrameLayout frame, View content, View header) {
+    protected boolean checkCanRefresh(PtrFrameLayout frame, View content, View header) {
         ListView absListView = listView.getWrappedList();
         return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
     }

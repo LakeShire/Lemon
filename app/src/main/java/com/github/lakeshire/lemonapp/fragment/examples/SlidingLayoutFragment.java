@@ -3,13 +3,11 @@ package com.github.lakeshire.lemonapp.fragment.examples;
 import android.view.View;
 import android.widget.ScrollView;
 
+import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhanceHeader;
-import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
-import com.github.lakeshire.lemonapp.view.pulltofresh.PtrHandler;
 
 import butterknife.Bind;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * Created by nali on 2016/4/21.
@@ -27,23 +25,13 @@ public class SlidingLayoutFragment extends BasePullFragment {
     @Override
     public void initUi() {
         super.initUi();
-        EnhanceHeader header = new EnhanceHeader(getActivity(), 0);
-        header.setCustomTitleBar(true);
+    }
 
-        mPtrFrameLayout.setDurationToCloseHeader(1500);
-        mPtrFrameLayout.setHeaderView(header);
-        mPtrFrameLayout.setPinHeader(false);
-        mPtrFrameLayout.addPtrUIHandler(header);
-        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(EnhancePtrFrameLayout frame, View content, View header) {
-                return mScrollView.getScrollY() <= 0;
-            }
+    protected void onRefresh(PtrFrameLayout frame) {
+        onRefresh(frame);
+    }
 
-            @Override
-            public void onRefreshBegin(EnhancePtrFrameLayout frame) {
-                onRefresh(frame);
-            }
-        });
+    protected boolean checkCanRefresh(PtrFrameLayout frame, View content, View header) {
+        return mScrollView.getScrollY() <= 0;
     }
 }

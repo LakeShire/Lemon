@@ -1,4 +1,4 @@
-<com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout
+<in.srain.cube.views.ptr.PtrFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ptr_frame"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
@@ -26,5 +26,5 @@
             android:layout_height="match_parent">
         </ListView>
     </FrameLayout>
-</com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout>
+</in.srain.cube.views.ptr.PtrFrameLayout>
 

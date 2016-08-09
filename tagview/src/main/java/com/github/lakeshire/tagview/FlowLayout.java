@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.tagview;
+package com.github.lakeshire.tagview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,8 +7,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.github.lakeshire.lemonapp.R;
 
 public class FlowLayout extends ViewGroup {
 

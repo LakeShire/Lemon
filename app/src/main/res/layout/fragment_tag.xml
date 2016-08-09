@@ -27,7 +27,7 @@
             android:textColor="@color/color_shenhui"
             android:textSize="16.0sp" />
 
-        <com.github.lakeshire.lemonapp.view.tagview.TagListView
+        <com.github.lakeshire.tagview.TagListView
             xmlns:f="http://schemas.android.com/apk/res-auto"
             android:id="@+id/tagview"
             android:layout_width="match_parent"

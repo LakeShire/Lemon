@@ -61,4 +61,5 @@ dependencies {
     compile 'se.emilsjolander:stickylistheaders:2.7.0'
     compile project(path: ':lemon')
     compile project(path: ':stickyheaderlayout')
+    compile project(path: ':tagview')
 }

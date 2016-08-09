@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lemon" />
             <option value="$PROJECT_DIR$/stickyheaderlayout" />
+            <option value="$PROJECT_DIR$/tagview" />
           </set>
         </option>
         <option name="myModules">
@@ -21,6 +22,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lemon" />
             <option value="$PROJECT_DIR$/stickyheaderlayout" />
+            <option value="$PROJECT_DIR$/tagview" />
           </set>
         </option>
       </GradleProjectSettings>

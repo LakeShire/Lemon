@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.tagview;
+package com.github.lakeshire.tagview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,8 +9,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
-
-import com.github.lakeshire.lemonapp.R;
 
 public class TagView extends LinearLayout implements Checkable {
 
@@ -55,7 +53,7 @@ public class TagView extends LinearLayout implements Checkable {
     protected void onFinishInflate() {
         super.onFinishInflate();
         tbName = new ToggleButton(context);
-        LinearLayout.LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, 64);
+        LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, 64);
         tbName.setLayoutParams(lp);
         tbName.setTextSize(16);
         tbName.setTextOff(null);
@@ -132,7 +130,7 @@ public class TagView extends LinearLayout implements Checkable {
     public void setDeleteMode(boolean mIsDeleteMode) {
         this.deleteMode = mIsDeleteMode;
         if (deleteMode) {
-            LinearLayout.LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             lp.gravity = Gravity.CENTER;
             ivDelete = new ImageView(context);
             ivDelete.setImageResource(R.drawable.tag_delete);

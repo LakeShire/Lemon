@@ -2,9 +2,9 @@ package com.github.lakeshire.lemonapp.fragment.examples;
 
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
-import com.github.lakeshire.lemonapp.view.tagview.Tag;
-import com.github.lakeshire.lemonapp.view.tagview.TagListView;
-import com.github.lakeshire.lemonapp.view.tagview.TagView;
+import com.github.lakeshire.tagview.Tag;
+import com.github.lakeshire.tagview.TagListView;
+import com.github.lakeshire.tagview.TagView;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;

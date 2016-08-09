@@ -1,12 +1,10 @@
-package com.github.lakeshire.lemonapp.view.tagview;
+package com.github.lakeshire.tagview;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
-
-import com.github.lakeshire.lemonapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

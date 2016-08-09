@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.tagview;
+package com.github.lakeshire.tagview;
 
 import java.io.Serializable;
 

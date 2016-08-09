@@ -35,7 +35,6 @@ public class CommonListFragment2 extends BaseFragment {
     private CommonAdapter<DemoModel> mAdapter;
     private ArrayList<DemoModel> data = new ArrayList();
 
-    @Bind(R.id.list)
     ListView listView;
 
     public CommonListFragment2(String title) {
@@ -56,6 +55,7 @@ public class CommonListFragment2 extends BaseFragment {
     public void initUi() {
         super.initUi();
         mAdapter = getAdapter(data);
+        listView = (ListView) find(R.id.list);
         listView.setAdapter(mAdapter);
     }
 
@@ -78,13 +78,13 @@ public class CommonListFragment2 extends BaseFragment {
         data.add(new DemoModel("安度因", "text"));
         data.add(new DemoModel("乌瑟尔", "image"));
         data.add(new DemoModel("瓦利拉", "button"));
-        data.add(new DemoModel("古尔丹", "text"));
-        data.add(new DemoModel("玛法里奥", "image"));
-        data.add(new DemoModel("闪光", "text"));
-        data.add(new DemoModel("德哈卡", "text"));
-        data.add(new DemoModel("阿尔萨斯", "button"));
-        data.add(new DemoModel("阿塔尼斯", "image"));
-        data.add(new DemoModel("凯瑞甘", "button"));
+        data.add(new DemoModel("卢西奥", "text"));
+        data.add(new DemoModel("卢西奥", "image"));
+        data.add(new DemoModel("卢西奥", "text"));
+        data.add(new DemoModel("卢西奥", "text"));
+        data.add(new DemoModel("卢西奥", "button"));
+        data.add(new DemoModel("卢西奥", "image"));
+        data.add(new DemoModel("卢西奥", "button"));
         mAdapter.notifyDataSetChanged();
     }
 

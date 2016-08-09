@@ -1,25 +1,17 @@
-package com.github.lakeshire.lemonapp.view.multiscroll;
+package com.github.lakeshire.stickyheaderlayout;
 
 import android.content.Context;
-import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
-
-import com.astuetz.PagerSlidingTabStrip;
-import com.github.lakeshire.lemonapp.adapter.PagerAdapter;
-import com.github.lakeshire.lemonapp.fragment.base.BasePagerFragment;
-import com.orhanobut.logger.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 嵌套滑动页面组件
@@ -27,14 +19,12 @@ import java.util.List;
  * @author louis.liu
  * 
  */
-public class MultiScrollView extends RelativeLayout {
+public class StickyHeaderLayout extends RelativeLayout {
 
-	private static final String TAG = "MultiScrollView";
+	private static final String TAG = StickyHeaderLayout.class.getName();
+	private int mMinimumVelocity;
+	private int mMaximumVelocity;
 
-	/**
-	 * 当前持有的ListView
-	 */
-	private ListView mListView;
 	/**
 	 * 持有的ViewPager
 	 */
@@ -72,10 +62,6 @@ public class MultiScrollView extends RelativeLayout {
 	 */
 	private boolean mOnlyList = false;
 	/**
-	 * 头部View列表
-	 */
-	private List<View> mHeaderViews = new ArrayList<View>();
-	/**
 	 * ViewPager关联的Adapter
 	 */
 	private PagerAdapter mPagerAdapter;
@@ -88,28 +74,27 @@ public class MultiScrollView extends RelativeLayout {
 	 */
 	private boolean mAllShow = true;
 
-	private int measureTimes = 0;
-	private long measureCost = 0;
-	private int layoutTimes = 0;
-	private long layoutCost = 0;
+	private boolean isTouchable = true;
+	private VelocityTracker mVelocityTracker;
 
-	public MultiScrollView(Context context) {
+	private int mTabId = R.id.tabs;
+	private int mViewPagerId = R.id.pager;
+	private int mBannerId = R.id.banner;
+
+	public StickyHeaderLayout(Context context) {
 		super(context);
 	}
 
-	public MultiScrollView(Context context, AttributeSet attrs) {
+	public StickyHeaderLayout(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// mContext = context;
 		mScroller = new Scroller(context);
+		mMaximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
+		mMinimumVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
 	}
 
-	public MultiScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public StickyHeaderLayout(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 	}
-
-//	public void setData(List<SoundModel> list) {
-//
-//	}
 
 	/**
 	 * 覆写onLayout，其目的是为了指定视图的显示位置，方法执行的前后顺序是在onMeasure之后，因为视图肯定是只有知道大小的情况下，
@@ -118,8 +103,6 @@ public class MultiScrollView extends RelativeLayout {
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
 		mTotalHeight = 0;
-
-		long start = System.currentTimeMillis();
 
 		// 遍历所有子视图
 		int childCount = getChildCount();
@@ -135,11 +118,6 @@ public class MultiScrollView extends RelativeLayout {
 
 			mTotalHeight += measureHeight;
 		}
-
-		long end = System.currentTimeMillis();
-		layoutTimes++;
-		layoutCost += (end - start);
-		Logger.d("call onLayout " + layoutTimes + " times, total " + layoutCost + "ms");
 	}
 
 	/**
@@ -148,8 +126,6 @@ public class MultiScrollView extends RelativeLayout {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-		long start = System.currentTimeMillis();
 
 		int measureWidth = measureWidth(widthMeasureSpec);
 		int measureHeight = measureHeight(heightMeasureSpec);
@@ -166,12 +142,12 @@ public class MultiScrollView extends RelativeLayout {
 
 				final View child = this.getChildAt(i);
 
-				if (child instanceof PagerSlidingTabStrip) {
+				if (child.getId() == getTabId()) {
 					int tabHeight = child.getMeasuredHeight();
 					mReserveHeight += tabHeight;
 				}
 
-				if (child instanceof ViewPager) {
+				if (child.getId() == getViewPagerId()) {
 					int validHeight = this.getMeasuredHeight();
 					int height = validHeight - mReserveHeight;
 					ViewGroup.LayoutParams lp = child.getLayoutParams();
@@ -179,27 +155,40 @@ public class MultiScrollView extends RelativeLayout {
 					child.setLayoutParams(lp);
 				}
 
-				for (View v : mHeaderViews) {
-					if (v.equals(child)) {
-						mFixedHeight += child.getMeasuredHeight();
-						break;
-					}
+				if (child.getId() == getBannerId()) {
+					mFixedHeight += child.getMeasuredHeight();
 				}
 			}
 			firstMeasure = false;
 		}
-
-		long end = System.currentTimeMillis();
-		measureTimes++;
-		measureCost += (end - start);
-		Logger.d("call onMeasure " + measureTimes + " times, total " + measureCost + "ms");
 	}
 
-	void measureChildBeforeLayout(View child, int childIndex,
-			int widthMeasureSpec, int totalWidth, int heightMeasureSpec,
-			int totalHeight) {
-		measureChildWithMargins(child, widthMeasureSpec, totalWidth,
-				heightMeasureSpec, totalHeight);
+	public int getTabId() {
+		return mTabId;
+	}
+
+	public void setTabId(int tabId) {
+		mTabId = tabId;
+	}
+
+	public int getViewPagerId() {
+		return mViewPagerId;
+	}
+
+	public void setViewPagerId(int viewPagerId) {
+		mViewPagerId = viewPagerId;
+	}
+
+	public int getBannerId() {
+		return mBannerId;
+	}
+
+	public void setBannerId(int bannerId) {
+		mBannerId = bannerId;
+	}
+
+	public void setTouchable(boolean touchable) {
+		isTouchable = touchable;
 	}
 
 	private int measureWidth(int pWidthMeasureSpec) {
@@ -252,18 +241,22 @@ public class MultiScrollView extends RelativeLayout {
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		initVelocityTrackerIfNotExists();
 		boolean intercepted = false;
 		int x = (int) ev.getX();
 		int y = (int) ev.getY();
 
+		if (!isTouchable) {
+			return true;
+		}
+
 		switch (ev.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			intercepted = false;
 			mLastX = x;
 			mLastY = y;
 			break;
 		case MotionEvent.ACTION_UP:
-			intercepted = false;
+			recycleVelocityTracker();
 			break;
 		case MotionEvent.ACTION_MOVE:
 			int deltaY = y - mLastY;
@@ -272,7 +265,6 @@ public class MultiScrollView extends RelativeLayout {
 			mLastX = x;
 			mLastY = y;
 
-			intercepted = false;
 			// 横向：子
 			if (absDeltaX >= absDeltaY) {
 				Log.i(TAG, "横向：子");
@@ -297,24 +289,22 @@ public class MultiScrollView extends RelativeLayout {
 					if (mOnlyList) {
 						// 头部全部隐藏
 						if (mPager != null && mPagerAdapter != null) {
-							Fragment fragment = mPagerAdapter.getItem(mPager
-									.getCurrentItem());
+							Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
 							if (fragment != null) {
-								mListView = ((BasePagerFragment) fragment)
-										.getListView();
-								if (mListView == null) {
+								if (!(fragment instanceof IHandler)) {
+									Log.d(TAG, "子页面没有实现IHandler接口，由父页面处理");
 									return true;
 								}
 							}
-						}
-						if (mListView.getFirstVisiblePosition() == 0) {
-							// 列表到顶：父
-							Log.i(TAG, "下拉，头部不可见，列表到顶：父");
-							return true;
-						} else {
-							// 列表没到顶：子
-							Log.i(TAG, "下拉，头部不可见，列表未到顶：子");
-							return false;
+							if (((IHandler) fragment).checkTop()) {
+								// 列表到顶：父
+								Log.i(TAG, "下拉，头部不可见，列表到顶：父");
+								return true;
+							} else {
+								// 列表没到顶：子
+								Log.i(TAG, "下拉，头部不可见，列表未到顶：子");
+								return false;
+							}
 						}
 					} else {
 						// 头部未全部隐藏：父
@@ -336,14 +326,30 @@ public class MultiScrollView extends RelativeLayout {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		mVelocityTracker.addMovement(event);
 		int x = (int) event.getX();
 		int y = (int) event.getY();
+
+		if (!isTouchable) {
+			return false;
+		}
+
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
 			mLastX = x;
 			mLastY = y;
 			break;
 		case MotionEvent.ACTION_UP:
+			mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
+			int velocityY = (int) mVelocityTracker.getYVelocity();
+			if (Math.abs(velocityY) > mMinimumVelocity) {
+				if (velocityY < 0) {
+					mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getFinalY());
+				} else {
+					mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, -mScroller.getFinalY());
+				}
+			}
+			recycleVelocityTracker();
 			break;
 		case MotionEvent.ACTION_MOVE:
 			int deltaY = y - mLastY;
@@ -355,58 +361,43 @@ public class MultiScrollView extends RelativeLayout {
 
 			if (mScroller.getCurrY() + mScrollHeight <= 0) {
 				mAllShow = true;
-				mScroller.startScroll(mScroller.getFinalX(),
-						mScroller.getFinalY(), 0, -mScroller.getFinalY());
+				mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, -mScroller.getFinalY());
 				invalidate();
 
 				this.onInterceptTouchEvent(event);
 				return false;
 			}
-			if (mScroller.getFinalY() + mScrollHeight >= 0
-					&& mScroller.getFinalY() + mScrollHeight <= mTotalHeight) {
+			if (mScroller.getFinalY() + mScrollHeight >= 0 && mScroller.getFinalY() + mScrollHeight <= mTotalHeight) {
 				mAllShow = false;
 				if (!mOnlyList) {
 					// 界面上不仅只有List的情况下 看滚动的长度
 					if (mScroller.getFinalY() + mScrollHeight >= mFixedHeight) {
 						// 如果滚动出固定长 则进入完全的List
 						mOnlyList = true;
-						mScroller.startScroll(mScroller.getFinalX(),
-								mScroller.getFinalY(), 0, mFixedHeight
-										- mScroller.getFinalY());
+						mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getFinalY());
 					} else {
 						// 正常滚动
 						mOnlyList = false;
-						mScroller.startScroll(mScroller.getFinalX(),
-								mScroller.getFinalY(), 0, mScrollHeight);
+						mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mScrollHeight);
 					}
 				} else {
 					// 界面上仅有List的情况下
 					if (mScrollHeight < 0) {
 						// 如果是向下拉 父控件处理滑动
-						mScroller.startScroll(mScroller.getFinalX(),
-								mScroller.getFinalY(), 0, mFixedHeight
-										- mScroller.getCurrY());
+						mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getCurrY());
 						mOnlyList = false;
 					} else {
 						// 如果是向上推 就得让子控件推
-						// 除以2是为了降低进入全List时的突兀感...
-						if (mListView == null) {
-							if (mPager != null && mPagerAdapter != null) {
-								Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
-								if (fragment != null) {
-									mListView = ((BasePagerFragment) fragment)
-											.getListView();
-									if (mListView == null) {
-										return true;
-									}
+						if (mPager != null && mPagerAdapter != null) {
+							Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
+							if (fragment != null) {
+								if (!(fragment instanceof IHandler)) {
+									Log.d(TAG, "子页面没有实现IHandler接口，由父页面处理");
+									break;
+								} else {
+									((IHandler) fragment).scroll(mScrollHeight);
 								}
 							}
-						}
-
-						if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-							mListView.scrollListBy(mScrollHeight);
-						} else {
-							mListView.scrollTo(0, mScrollHeight);
 						}
 					}
 				}
@@ -431,37 +422,30 @@ public class MultiScrollView extends RelativeLayout {
 		super.computeScroll();
 	}
 
-	public void setListView(ListView lv) {
-		mListView = lv;
-		if (mListView != null) {
-		}
-	}
-
-	public void setTabs(PagerSlidingTabStrip tabs) {
-
-	}
-
 	public void setPager(ViewPager pager) {
 		mPager = pager;
-	}
-
-	public void addHeaderView(View view) {
-		mHeaderViews.add(view);
-	}
-
-	/**
-	 * 切换页面时重置动作
-	 */
-	public void refreshView() {
-		// 切换页面 对应的List引用也会变 置空 下一次触摸事件时获得当前引用
-		mListView = null;
 	}
 
 	public void setPagerAdapter(PagerAdapter adapter) {
 		mPagerAdapter = adapter;
 	}
 
-	public void setReserveHeight(int height) {
-		mReserveHeight = height;
+	private void initVelocityTrackerIfNotExists() {
+		if (mVelocityTracker == null) {
+			mVelocityTracker = VelocityTracker.obtain();
+		}
+	}
+
+	private void recycleVelocityTracker() {
+		if (mVelocityTracker != null) {
+			mVelocityTracker.recycle();
+			mVelocityTracker = null;
+		}
+	}
+
+	public interface IHandler {
+		//	如果实现这个接口 下拉时会先将子页面拉倒顶 再拉父页面
+		boolean checkTop();
+		void scroll(int y);
 	}
 }

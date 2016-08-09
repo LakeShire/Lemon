@@ -8,12 +8,13 @@ import android.widget.RelativeLayout;
 import com.github.lakeshire.lemon.util.ScreenUtil;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.adapter.FocusImageAdapter;
-import com.github.lakeshire.lemonapp.adapter.PagerAdapter;
 import com.github.lakeshire.lemonapp.fragment.base.BaseScrollFragment;
 import com.github.lakeshire.lemonapp.model.ImageHolder;
 import com.github.lakeshire.lemonapp.util.FixedSpeedScroller;
 import com.github.lakeshire.lemonapp.util.ViewUtil;
 import com.github.lakeshire.lemonapp.view.pageindicator.CirclePageIndicator;
+import com.github.lakeshire.stickyheaderlayout.PageInfo;
+import com.github.lakeshire.stickyheaderlayout.PagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,12 @@ public class MultiScrollFragment extends BaseScrollFragment {
 
     @Override
     protected PagerAdapter getPagerAdapter() {
-        return new PagerAdapter(getChildFragmentManager(), titles, CommonListFragment.class.getName());
+        List<PageInfo> pages = new ArrayList<>();
+        pages.add(new PageInfo(CommonListFragment.class.getName(), null));
+        pages.add(new PageInfo(CommonListFragment.class.getName(), null));
+        pages.add(new PageInfo(CommonListFragment.class.getName(), null));
+        pages.add(new PageInfo(CommonListFragment.class.getName(), null));
+        return new PagerAdapter(getChildFragmentManager(), pages, titles);
     }
 
     @Override

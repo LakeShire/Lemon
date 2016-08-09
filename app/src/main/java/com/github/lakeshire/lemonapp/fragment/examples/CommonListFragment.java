@@ -2,7 +2,9 @@ package com.github.lakeshire.lemonapp.fragment.examples;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +15,11 @@ import android.widget.Toast;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.fragment.base.BasePagerFragment;
 import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
+import com.github.lakeshire.stickyheaderlayout.StickyHeaderLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 import kale.adapter.CommonAdapter;
 import kale.adapter.item.AdapterItem;
 
@@ -27,14 +29,12 @@ import kale.adapter.item.AdapterItem;
  * 方便的使用适配器，根据模型类型不同使用不同的布局
  *
  */
-public class CommonListFragment extends BasePagerFragment {
+public class CommonListFragment extends BasePagerFragment implements StickyHeaderLayout.IHandler {
 
     private String title;
     private CommonAdapter<DemoModel> mAdapter;
     private ArrayList<DemoModel> data = new ArrayList();
-
-    @Bind(R.id.list)
-    ListView listView;
+    private ListView listView;
 
     public CommonListFragment(String title) {
         super();
@@ -54,6 +54,7 @@ public class CommonListFragment extends BasePagerFragment {
     public void initUi() {
         super.initUi();
         mAdapter = getAdapter(data);
+        listView = (ListView) find(R.id.list);
         listView.setAdapter(mAdapter);
     }
 
@@ -214,11 +215,13 @@ public class CommonListFragment extends BasePagerFragment {
         return false;
     }
 
+    @Override
     public boolean checkTop() {
         ListView absListView = listView;
         return !(absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0 || absListView.getChildAt(0).getTop() < absListView.getPaddingTop()));
     }
 
+    @Override
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void scroll(int y) {
         listView.scrollListBy(y);

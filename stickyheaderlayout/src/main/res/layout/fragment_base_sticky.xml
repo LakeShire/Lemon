@@ -9,20 +9,18 @@
     <com.github.lakeshire.stickyheaderlayout.StickyHeaderLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_view"
-        android:background="@color/white">
+        android:id="@+id/main_view">
         
-        <include
+        <View
             android:id="@+id/banner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/online_banner_height"
-            android:orientation="horizontal"
-            layout="@layout/view_banner"/>
+            android:layout_height="256dp"
+            android:orientation="horizontal" />
         
         <com.astuetz.PagerSlidingTabStrip
 	        android:id="@+id/tabs"
 	        android:layout_width="match_parent"
-	        android:layout_height="@dimen/online_tabs_height"
+	        android:layout_height="40dp"
 	        android:layout_below="@id/banner"/>
         
         <android.support.v4.view.ViewPager

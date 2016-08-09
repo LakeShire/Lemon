@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lemon.iml" filepath="$PROJECT_DIR$/lemon.iml" />
       <module fileurl="file://$PROJECT_DIR$/lemon/lemon-lemon.iml" filepath="$PROJECT_DIR$/lemon/lemon-lemon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slidelistview/slidelistview.iml" filepath="$PROJECT_DIR$/slidelistview/slidelistview.iml" />
       <module fileurl="file://$PROJECT_DIR$/stickyheaderlayout/stickyheaderlayout.iml" filepath="$PROJECT_DIR$/stickyheaderlayout/stickyheaderlayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/tagview/tagview.iml" filepath="$PROJECT_DIR$/tagview/tagview.iml" />
     </modules>

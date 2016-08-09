@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.slidelistview;
+package com.github.lakeshire.slidelistview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -9,8 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.adapter.slidelistview.SlideAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

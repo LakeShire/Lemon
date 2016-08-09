@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="scroll_list" type="id"></item>
+    <item name="scroll_title" type="id"></item>
+    <item name="block" type="id"></item>
+    <item name="header" type="id"></item>
+    <item name="item_scroll" type="id"></item>
+    <item name="check" type="id"></item>
+</resources>

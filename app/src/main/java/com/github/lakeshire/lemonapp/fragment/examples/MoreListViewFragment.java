@@ -11,10 +11,10 @@ import com.github.lakeshire.lemonapp.adapter.morelistview.MoreItemAdapter;
 import com.github.lakeshire.lemonapp.adapter.morelistview.MyMoreItemAdapter;
 import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.model.DataWrapper;
+import com.github.lakeshire.lemonapp.model.MoreModel;
 import com.github.lakeshire.lemonapp.model.Response;
 import com.github.lakeshire.lemonapp.model.Stock;
 import com.github.lakeshire.lemonapp.model.slidelistview.Model;
-import com.github.lakeshire.lemonapp.model.slidelistview.MyModel;
 import com.github.lakeshire.lemonapp.view.LoadMoreListView;
 import com.github.lakeshire.lemonapp.view.morelistview.MoreListView;
 import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
@@ -26,7 +26,7 @@ import java.util.List;
 public class MoreListViewFragment extends BasePullFragment {
 
     private MoreListView mListView;
-    private ArrayList<MyModel> mDatas = new ArrayList();
+    private ArrayList<MoreModel> mDatas = new ArrayList();
     private MyMoreItemAdapter mAdapter;
     private boolean loading = false;
     private int mPageId = 1;
@@ -118,7 +118,7 @@ public class MoreListViewFragment extends BasePullFragment {
                         mListView.onLoadMoreComplete(LoadMoreListView.STATUS_NO_CONTENT);
                     }
                     for (Stock stock : stocks) {
-                        mDatas.add(new MyModel(new Model(stock.getName(), stock.getTrade(), stock.getChangepercent(), stock.getPricechange(), ((float) Integer.parseInt(stock.getVolume()) / 10000) + "", stock.getOpen(), stock.getHigh(), stock.getLow()), false));
+                        mDatas.add(new MoreModel(new Model(stock.getName(), stock.getTrade(), stock.getChangepercent(), stock.getPricechange(), ((float) Integer.parseInt(stock.getVolume()) / 10000) + "", stock.getOpen(), stock.getHigh(), stock.getLow()), false));
                     }
                     loading = false;
                     notifyAdapter();

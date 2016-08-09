@@ -2,9 +2,7 @@ package com.github.lakeshire.lemonapp.fragment.examples;
 
 import android.annotation.TargetApi;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,8 +10,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.lakeshire.lemon.fragment.base.BaseFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.fragment.base.BasePagerFragment;
+import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import com.github.lakeshire.stickyheaderlayout.StickyHeaderLayout;
 
@@ -29,7 +28,7 @@ import kale.adapter.item.AdapterItem;
  * 方便的使用适配器，根据模型类型不同使用不同的布局
  *
  */
-public class CommonListFragment extends BasePagerFragment implements StickyHeaderLayout.IHandler {
+public class CommonListFragment extends BasePullFragment implements StickyHeaderLayout.IHandler {
 
     private String title;
     private CommonAdapter<DemoModel> mAdapter;
@@ -56,11 +55,6 @@ public class CommonListFragment extends BasePagerFragment implements StickyHeade
         mAdapter = getAdapter(data);
         listView = (ListView) find(R.id.list);
         listView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public ListView getListView() {
-        return listView;
     }
 
     @Override

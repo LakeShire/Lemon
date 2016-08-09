@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.adapter.slidelistview;
+package com.github.lakeshire.slidelistview;
 
 import android.content.Context;
 import android.view.View;
@@ -6,10 +6,6 @@ import android.widget.CheckBox;
 
 import com.github.lakeshire.lemon.adapter.base.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.base.ViewHolder;
-import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.model.CheckableModel;
-import com.github.lakeshire.lemonapp.view.slidelistview.ScrollItemView;
-import com.github.lakeshire.lemonapp.view.slidelistview.SlideListView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

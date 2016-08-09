@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.slidelistview;
+package com.github.lakeshire.slidelistview;
 
 import android.content.Context;
 import android.util.AttributeSet;

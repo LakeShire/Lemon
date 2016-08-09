@@ -80,7 +80,8 @@ public class MyPullToZoomFragment extends BaseFragment {
 
             @Override
             public void onRefresh(PullToZoomView view) {
-                mFragment.onRefresh(view);
+//                mFragment.onRefresh(view);
+                view.onRefreshCompleted();
             }
         });
         ptrView.setZoomable(true);

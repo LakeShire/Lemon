@@ -1,1 +1,1 @@
-include ':app', ':lemon', ':stickyheaderlayout', ':tagview'
+include ':app', ':lemon', ':stickyheaderlayout', ':tagview', ':slidelistview'

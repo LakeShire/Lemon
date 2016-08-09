@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.model;
+package com.github.lakeshire.slidelistview;
 
 /**
  * 持有数据模型以及该项是否被选中

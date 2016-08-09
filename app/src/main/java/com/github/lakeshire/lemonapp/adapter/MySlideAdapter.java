@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.adapter.slidelistview;
+package com.github.lakeshire.lemonapp.adapter;
 
 import android.content.Context;
 import android.widget.TextView;
@@ -7,7 +7,8 @@ import com.github.lakeshire.lemon.adapter.base.ViewHolder;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.model.slidelistview.Model;
 import com.github.lakeshire.lemonapp.model.slidelistview.MyModel;
-import com.github.lakeshire.lemonapp.view.slidelistview.SlideListView;
+import com.github.lakeshire.slidelistview.SlideAdapter;
+import com.github.lakeshire.slidelistview.SlideListView;
 
 import java.util.List;
 

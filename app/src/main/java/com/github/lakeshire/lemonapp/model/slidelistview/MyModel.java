@@ -1,6 +1,6 @@
 package com.github.lakeshire.lemonapp.model.slidelistview;
 
-import com.github.lakeshire.lemonapp.model.CheckableModel;
+import com.github.lakeshire.slidelistview.CheckableModel;
 
 public class MyModel extends CheckableModel<Model> {
 

@@ -11,15 +11,13 @@ import com.github.lakeshire.lemon.adapter.base.ViewHolder;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.AnimatePieFragment;
-import com.github.lakeshire.lemonapp.fragment.examples.BlurFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.CircleProgressFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.MoreListViewFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.MultiScrollFragment;
-import com.github.lakeshire.lemonapp.fragment.examples.MyPullToZoomFragment;
+import com.github.lakeshire.lemonapp.fragment.examples.PullToZoomFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.PagerFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.PathMenuFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.PhotoViewFragment;
-import com.github.lakeshire.lemonapp.fragment.examples.PullToZoomFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.RecycleListFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.SelectorFragment;
 import com.github.lakeshire.lemonapp.fragment.examples.SlideListViewFragment;
@@ -75,15 +73,13 @@ public class ExampleListFragment extends BasePullFragment {
         mDatas.add(new ExampleModel("环形进度条", CircleProgressFragment.class));
         mDatas.add(new ExampleModel("SlidingLayout", SlidingLayoutFragment.class));
         mDatas.add(new ExampleModel("嵌套滑动页面", MultiScrollFragment.class));
-        mDatas.add(new ExampleModel("下拉缩放头部", PullToZoomFragment.class));
         mDatas.add(new ExampleModel("RecyclerView", RecycleListFragment.class));
         mDatas.add(new ExampleModel("瀑布流", StaggeredFragment.class));
         mDatas.add(new ExampleModel("PhotoView", PhotoViewFragment.class));
         mDatas.add(new ExampleModel("头部固定的ListView", StickyHeaderListFragment.class));
-        mDatas.add(new ExampleModel("模糊", BlurFragment.class));
         mDatas.add(new ExampleModel("竖直方向ViewPager", VerticalViewPagerFragment.class));
         mDatas.add(new ExampleModel("歌词效果", StringListFragment.class));
-        mDatas.add(new ExampleModel("ViewDragHelper", MyPullToZoomFragment.class));
+        mDatas.add(new ExampleModel("下拉缩放头部", PullToZoomFragment.class));
         mAdapter.notifyDataSetChanged();
     }
 

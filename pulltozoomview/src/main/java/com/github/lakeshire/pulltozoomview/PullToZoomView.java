@@ -1,24 +1,22 @@
-package com.github.lakeshire.lemonapp.view;
+package com.github.lakeshire.pulltozoomview;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-
-import com.github.lakeshire.lemon.util.ScreenUtil;
-import com.github.lakeshire.lemonapp.R;
-import com.orhanobut.logger.Logger;
 
 /**
  * Created by nali on 2016/7/11.
  */
 public class PullToZoomView extends ScrollView {
 
+    private static final String TAG = PullToZoomView.class.getName();
     private Context mContext;
     private View mHeaderView;
     private int mHeaderViewHeight;
@@ -106,11 +104,11 @@ public class PullToZoomView extends ScrollView {
                     mPullState = PULLUP;
                     if (getScrollY() > mHeaderViewHeight) {
                         // 头部全部隐藏：子
-                        Logger.d("上拉，头部不可见：子");
+                        Log.d(TAG, "上拉，头部不可见：子");
                         return false;
                     } else {
                         // 头部为全部隐藏：父
-                        Logger.d("上拉，头部可见：父");
+                        Log.d(TAG, "上拉，头部可见：父");
                         return true;
                     }
                 } else if (deltaY > 0) {
@@ -118,10 +116,10 @@ public class PullToZoomView extends ScrollView {
                     mPullState = PULLDOWN;
                     if (checkTop()) {
                         mFirstY = y;
-                        Logger.d("下拉，头部不可见，列表顶， 父");
+                        Log.d(TAG, "下拉，头部不可见，列表顶， 父");
                         return true;
                     } else {
-                        Logger.d("下拉，头部不可见，子");
+                        Log.d(TAG, "下拉，头部不可见，子");
                         return false;
                     }
                 } else {

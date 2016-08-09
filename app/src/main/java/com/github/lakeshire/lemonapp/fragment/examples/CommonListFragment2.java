@@ -12,14 +12,13 @@ import android.widget.Toast;
 
 import com.github.lakeshire.lemon.fragment.base.BaseFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.view.PullToZoomView;
+import com.github.lakeshire.pulltozoomview.PullToZoomView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.Bind;
 import kale.adapter.CommonAdapter;
 import kale.adapter.item.AdapterItem;
 

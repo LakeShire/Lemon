@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.model;
+package com.github.lakeshire.lemon.model;
 
 /**
  * Created by nali on 2016/4/21.

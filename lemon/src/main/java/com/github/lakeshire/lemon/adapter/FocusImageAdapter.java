@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.adapter;
+package com.github.lakeshire.lemon.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,13 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.github.lakeshire.lemon.model.ImageHolder;
 import com.github.lakeshire.lemon.util.ImageUtil;
 import com.github.lakeshire.lemon.util.ScreenUtil;
-import com.github.lakeshire.lemonapp.model.ImageHolder;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 /**
  * 焦点图适配器
  *

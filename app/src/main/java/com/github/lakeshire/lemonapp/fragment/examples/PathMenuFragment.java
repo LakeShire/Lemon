@@ -5,15 +5,12 @@ import android.widget.Toast;
 
 import com.github.lakeshire.lemon.fragment.base.BasePullFragment;
 import com.github.lakeshire.lemonapp.R;
-import com.github.lakeshire.lemonapp.view.PathMenu;
-
-import butterknife.Bind;
+import com.github.lakeshire.pathmenu.PathMenu;
 
 public class PathMenuFragment extends BasePullFragment {
 
     int icons[] = {R.drawable.path_music, R.drawable.path_location, R.drawable.path_photo, R.drawable.path_quote, R.drawable.path_sleep};
 
-    @Bind(R.id.path_menu)
     PathMenu mPathMenu;
 
     @Override
@@ -25,6 +22,7 @@ public class PathMenuFragment extends BasePullFragment {
     public void initUi() {
         super.initUi();
 
+        mPathMenu = (PathMenu) find(R.id.path_menu);
         View.OnClickListener[] listeners = new View.OnClickListener[5];
         listeners[0] = new View.OnClickListener() {
             @Override

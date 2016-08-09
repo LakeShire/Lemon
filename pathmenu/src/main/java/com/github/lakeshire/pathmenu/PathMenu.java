@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view;
+package com.github.lakeshire.pathmenu;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.github.lakeshire.lemonapp.R;
 
 /**
  * Created by nali on 2016/4/19.
@@ -59,7 +57,7 @@ public class PathMenu extends RelativeLayout {
             images[i].setImageResource(R.drawable.path_add);
             images[i].setImageResource(icons[i]);
             images[i].setVisibility(View.GONE);
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(64, 64);
+            LayoutParams lp = new LayoutParams(64, 64);
             lp.addRule(ALIGN_PARENT_BOTTOM);
             lp.addRule(CENTER_HORIZONTAL);
             images[i].setLayoutParams(lp);
@@ -71,7 +69,7 @@ public class PathMenu extends RelativeLayout {
         }
 
         ivAdd = new ImageView(context);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(64, 64);
+        LayoutParams lp = new LayoutParams(64, 64);
         lp.addRule(ALIGN_PARENT_BOTTOM);
         lp.addRule(CENTER_HORIZONTAL);
         ivAdd.setLayoutParams(lp);

@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.morelistview;
+package com.github.lakeshire.extralistview;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,9 +6,9 @@ import android.view.MotionEvent;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 
-import com.github.lakeshire.lemonapp.view.LoadMoreListView;
+import com.github.lakeshire.lemon.view.LoadMoreListView;
 
-public class MoreListView extends LoadMoreListView {
+public class ExtraListView extends LoadMoreListView {
 
     private int lastX;
     private int lastY;
@@ -21,15 +21,15 @@ public class MoreListView extends LoadMoreListView {
     private boolean hasMore = true;
     private BaseAdapter adapter;
 
-    public MoreListView(Context context) {
+    public ExtraListView(Context context) {
         super(context);
     }
 
-    public MoreListView(Context context, AttributeSet attrs) {
+    public ExtraListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MoreListView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ExtraListView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

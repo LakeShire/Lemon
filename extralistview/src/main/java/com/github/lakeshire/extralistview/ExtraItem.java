@@ -1,4 +1,4 @@
-package com.github.lakeshire.lemonapp.view.morelistview;
+package com.github.lakeshire.extralistview;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -12,9 +12,7 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
 
-import com.github.lakeshire.lemonapp.R;
-
-public class MoreItem extends RelativeLayout {
+public class ExtraItem extends RelativeLayout {
 
     private Scroller mScroller;
     private Context mContext;
@@ -31,21 +29,21 @@ public class MoreItem extends RelativeLayout {
     private FlingListener mListener;
     private GestureDetector mDetector;
 
-    public MoreItem(Context context) {
+    public ExtraItem(Context context) {
         super(context);
         mContext = context;
         mScroller = new Scroller(context);
         setDetector();
     }
 
-    public MoreItem(Context context, AttributeSet attrs) {
+    public ExtraItem(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         mScroller = new Scroller(context);
         setDetector();
     }
 
-    public MoreItem(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ExtraItem(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
         mScroller = new Scroller(context);
@@ -170,7 +168,7 @@ public class MoreItem extends RelativeLayout {
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
             if (!extraHidden) {
-                (((MoreListView) getParent()).getAdapter()).notifyDataSetChanged();
+                (((ExtraListView) getParent()).getAdapter()).notifyDataSetChanged();
             } else {
                 performClick();
             }
@@ -191,8 +189,8 @@ public class MoreItem extends RelativeLayout {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (((MoreListView) getParent()).hasMore()) {
-                (((MoreListView) getParent()).getAdapter()).notifyDataSetChanged();
+            if (((ExtraListView) getParent()).hasMore()) {
+                (((ExtraListView) getParent()).getAdapter()).notifyDataSetChanged();
                 if (velocityX < 0) {
                     showExtra();
                 } else {

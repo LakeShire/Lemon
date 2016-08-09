@@ -4,11 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.github.lakeshire.extralistview.ExtraItem;
 import com.github.lakeshire.lemon.adapter.base.BaseAdapter;
 import com.github.lakeshire.lemon.adapter.base.ViewHolder;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.model.CheckableModel;
-import com.github.lakeshire.lemonapp.view.morelistview.MoreItem;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class MoreItemAdapter<T extends CheckableModel> extends BaseAdapter<T> {
 
     @Override
     public void bindViewData(ViewHolder viewHolder, final T item, final int position) {
-        MoreItem convertView = ((MoreItem) (viewHolder.getConvertView()));
+        ExtraItem convertView = ((ExtraItem) (viewHolder.getConvertView()));
         convertView.hideExtra();
 
         //  对列表项中CheckBox的处理

@@ -5,7 +5,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
+import com.github.lakeshire.extralistview.ExtraListView;
 import com.github.lakeshire.lemon.util.HttpUtil;
+import com.github.lakeshire.lemon.view.LoadMoreListView;
 import com.github.lakeshire.lemonapp.R;
 import com.github.lakeshire.lemonapp.adapter.morelistview.MoreItemAdapter;
 import com.github.lakeshire.lemonapp.adapter.morelistview.MyMoreItemAdapter;
@@ -15,8 +17,6 @@ import com.github.lakeshire.lemonapp.model.MoreModel;
 import com.github.lakeshire.lemonapp.model.Response;
 import com.github.lakeshire.lemonapp.model.Stock;
 import com.github.lakeshire.lemonapp.model.slidelistview.Model;
-import com.github.lakeshire.lemonapp.view.LoadMoreListView;
-import com.github.lakeshire.lemonapp.view.morelistview.MoreListView;
 import com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout;
 import com.github.ybq.android.spinkit.style.FadingCircle;
 
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MoreListViewFragment extends BasePullFragment {
 
-    private MoreListView mListView;
+    private ExtraListView mListView;
     private ArrayList<MoreModel> mDatas = new ArrayList();
     private MyMoreItemAdapter mAdapter;
     private boolean loading = false;
@@ -52,7 +52,7 @@ public class MoreListViewFragment extends BasePullFragment {
     }
 
     private void initListView() {
-        mListView = (MoreListView) find(R.id.list);
+        mListView = (ExtraListView) find(R.id.list);
 
         mAdapter = new MyMoreItemAdapter(getActivity(), mDatas, R.layout.item_more);
         mListView.setAdapter(mAdapter);

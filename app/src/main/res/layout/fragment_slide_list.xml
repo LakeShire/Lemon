@@ -90,10 +90,10 @@
                 android:layout_height="48dp"
                 android:visibility="gone"/>
         </RelativeLayout>
-        <com.github.lakeshire.lemonapp.view.LoadMoreListView
+        <com.github.lakeshire.lemon.view.LoadMoreListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/scroll_list">
-        </com.github.lakeshire.lemonapp.view.LoadMoreListView>
+        </com.github.lakeshire.lemon.view.LoadMoreListView>
     </com.github.lakeshire.slidelistview.SlideListView>
 </com.github.lakeshire.lemonapp.view.pulltofresh.EnhancePtrFrameLayout>

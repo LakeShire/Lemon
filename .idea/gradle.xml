@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/extralistview" />
             <option value="$PROJECT_DIR$/lemon" />
             <option value="$PROJECT_DIR$/pulltozoomview" />
             <option value="$PROJECT_DIR$/slidelistview" />
@@ -22,6 +23,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/extralistview" />
             <option value="$PROJECT_DIR$/lemon" />
             <option value="$PROJECT_DIR$/pulltozoomview" />
             <option value="$PROJECT_DIR$/slidelistview" />

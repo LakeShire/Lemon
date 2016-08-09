@@ -63,4 +63,5 @@ dependencies {
     compile project(path: ':tagview')
     compile project(path: ':slidelistview')
     compile project(path: ':pulltozoomview')
+    compile project(path: ':extralistview')
 }

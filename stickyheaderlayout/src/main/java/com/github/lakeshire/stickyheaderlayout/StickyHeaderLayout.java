@@ -22,146 +22,38 @@ import android.widget.Scroller;
 public class StickyHeaderLayout extends RelativeLayout {
 
 	private static final String TAG = StickyHeaderLayout.class.getName();
+
+	private Context mContext;
+	private ViewPager mPager;
+	private PagerAdapter mPagerAdapter;
+	private Scroller mScroller;
+
+	private int mTotalHeight = 0;
+	private int mLastX;
+	private int mLastY;
+	private int mScrollHeight;
+	private int mFixedHeight;
+	// 保留高度 计算Pager实际高度时用到 Pager实际高度=父容器高度-保留高度 保留高度=Tab高度+底部播放条高度
+	private int mReserveHeight;
+
+	private boolean firstMeasure = true;
+	private boolean isHeaderAllShow = true;
+	private boolean isHeaderHidden = false;
+	private boolean isTouchable = true;
+	private boolean isDebugMode = false;
+
+	private VelocityTracker mVelocityTracker;
 	private int mMinimumVelocity;
 	private int mMaximumVelocity;
-
-	/**
-	 * 持有的ViewPager
-	 */
-	private ViewPager mPager;
-	/**
-	 * 所有View的总高度
-	 */
-	private int mTotalHeight = 0;
-	/**
-	 * 手指按下的X坐标
-	 */
-	private int mLastX;
-	/**
-	 * 手指按下的Y坐标
-	 */
-	private int mLastY;
-	/**
-	 * 主容器Y方向的滚动距离
-	 */
-	private int mScrollHeight;
-	/**
-	 * 本控件关联的滚动条
-	 */
-	private Scroller mScroller;
-	/**
-	 * 首次测量标志
-	 */
-	private boolean firstMeasure = true;
-	/**
-	 * 固定组件总高度 这个是需要算出来的
-	 */
-	private int mFixedHeight;
-	/**
-	 * 是否只有列表可见
-	 */
-	private boolean mOnlyList = false;
-	/**
-	 * ViewPager关联的Adapter
-	 */
-	private PagerAdapter mPagerAdapter;
-	/**
-	 * 保留高度 计算Pager实际高度时用到 Pager实际高度=父容器高度-保留高度 保留高度=Tab高度+底部播放条高度
-	 */
-	private int mReserveHeight;
-	/**
-	 * 头部是否全部显示
-	 */
-	private boolean mAllShow = true;
-
-	private boolean isTouchable = true;
-	private VelocityTracker mVelocityTracker;
 
 	private int mTabId = R.id.tabs;
 	private int mViewPagerId = R.id.pager;
 	private int mBannerId = R.id.banner;
 
-	public StickyHeaderLayout(Context context) {
-		super(context);
-	}
-
-	public StickyHeaderLayout(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		mScroller = new Scroller(context);
-		mMaximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
-		mMinimumVelocity = ViewConfiguration.get(context).getScaledMinimumFlingVelocity();
-	}
-
-	public StickyHeaderLayout(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-	}
-
-	/**
-	 * 覆写onLayout，其目的是为了指定视图的显示位置，方法执行的前后顺序是在onMeasure之后，因为视图肯定是只有知道大小的情况下，
-	 * 才能确定怎么摆放
-	 */
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		mTotalHeight = 0;
-
-		// 遍历所有子视图
-		int childCount = getChildCount();
-		for (int i = 0; i < childCount; i++) {
-			View childView = getChildAt(i);
-
-			// 获取在onMeasure中计算的视图尺寸
-			int measureHeight = childView.getMeasuredHeight();
-			int measuredWidth = childView.getMeasuredWidth();
-
-			childView.layout(l, mTotalHeight, measuredWidth, mTotalHeight
-					+ measureHeight);
-
-			mTotalHeight += measureHeight;
-		}
-	}
-
-	/**
-	 * 计算控件的大小
-	 */
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-		int measureWidth = measureWidth(widthMeasureSpec);
-		int measureHeight = measureHeight(heightMeasureSpec);
-
-		// 计算自定义的ViewGroup中所有子控件的大小
-		measureChildren(widthMeasureSpec, heightMeasureSpec);
-
-		// 设置自定义的控件MyViewGroup的大小
-		setMeasuredDimension(measureWidth, measureHeight);
-
-		if (firstMeasure) {
-			int childCount = this.getChildCount();
-			for (int i = 0; i < childCount; i++) {
-
-				final View child = this.getChildAt(i);
-
-				if (child.getId() == getTabId()) {
-					int tabHeight = child.getMeasuredHeight();
-					mReserveHeight += tabHeight;
-				}
-
-				if (child.getId() == getViewPagerId()) {
-					int validHeight = this.getMeasuredHeight();
-					int height = validHeight - mReserveHeight;
-					ViewGroup.LayoutParams lp = child.getLayoutParams();
-					lp.height = height;
-					child.setLayoutParams(lp);
-				}
-
-				if (child.getId() == getBannerId()) {
-					mFixedHeight += child.getMeasuredHeight();
-				}
-			}
-			firstMeasure = false;
-		}
-	}
+	private int mDeltaY;
+	private int mAbsDeltaX;
+	private int mAbsDeltaY;
+	private int mVelocityY;
 
 	public int getTabId() {
 		return mTabId;
@@ -191,35 +83,126 @@ public class StickyHeaderLayout extends RelativeLayout {
 		isTouchable = touchable;
 	}
 
+	public void setPager(ViewPager pager) {
+		mPager = pager;
+	}
+
+	public void setPagerAdapter(PagerAdapter adapter) {
+		mPagerAdapter = adapter;
+	}
+
+	public boolean isDebugMode() {
+		return isDebugMode;
+	}
+
+	public void setDebugMode(boolean debugMode) {
+		isDebugMode = debugMode;
+	}
+
+	public StickyHeaderLayout(Context context) {
+		super(context);
+		mContext = context;
+		init();
+	}
+
+	public StickyHeaderLayout(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		mContext = context;
+		init();
+	}
+
+	public StickyHeaderLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+		super(context, attrs, defStyleAttr);
+		mContext = context;
+		init();
+	}
+
+	private void init() {
+		mScroller = new Scroller(mContext);
+		mMaximumVelocity = ViewConfiguration.get(mContext).getScaledMaximumFlingVelocity();
+		mMinimumVelocity = ViewConfiguration.get(mContext).getScaledMinimumFlingVelocity();
+	}
+
+	@Override
+	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+		mTotalHeight = 0;
+		layoutChildren(l);
+	}
+
+	private void layoutChildren(int left) {
+		int childCount = getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			View childView = getChildAt(i);
+			int measureHeight = childView.getMeasuredHeight();
+			int measuredWidth = childView.getMeasuredWidth();
+			childView.layout(left, mTotalHeight, measuredWidth, mTotalHeight + measureHeight);
+			mTotalHeight += measureHeight;
+		}
+	}
+
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+		int measureWidth = measureWidth(widthMeasureSpec);
+		int measureHeight = measureHeight(heightMeasureSpec);
+		measureChildren(widthMeasureSpec, heightMeasureSpec);
+		setMeasuredDimension(measureWidth, measureHeight);
+
+		if (firstMeasure) {
+			dealFirstMeasure();
+		}
+	}
+
+	private void dealFirstMeasure() {
+		int childCount = this.getChildCount();
+		for (int i = 0; i < childCount; i++) {
+			final View child = this.getChildAt(i);
+			dealWhenViewIsTab(child);
+			dealWhenViewIsViewPager(child);
+			dealWhenViewIsBanner(child);
+		}
+		firstMeasure = false;
+	}
+
+	private void dealWhenViewIsBanner(View view) {
+		if (view.getId() == getBannerId()) {
+			mFixedHeight += view.getMeasuredHeight();
+		}
+	}
+
+	private void dealWhenViewIsViewPager(View view) {
+		if (view.getId() == getViewPagerId()) {
+			adjustViewPagerHeight(view);
+
+		}
+	}
+
+	private void adjustViewPagerHeight(View view) {
+		int validHeight = getMeasuredHeight();
+		int height = validHeight - mReserveHeight;
+		ViewGroup.LayoutParams lp = view.getLayoutParams();
+		lp.height = height;
+		view.setLayoutParams(lp);
+	}
+
+	private void dealWhenViewIsTab(View view) {
+		if (view.getId() == getTabId()) {
+			int tabHeight = view.getMeasuredHeight();
+			mReserveHeight += tabHeight;
+		}
+	}
+
 	private int measureWidth(int pWidthMeasureSpec) {
 		int result = 0;
 		int widthMode = MeasureSpec.getMode(pWidthMeasureSpec);
 		int widthSize = MeasureSpec.getSize(pWidthMeasureSpec);
 
 		switch (widthMode) {
-		/**
-		 * mode共有三种情况，取值分别为MeasureSpec.UNSPECIFIED, MeasureSpec.EXACTLY,
-		 * MeasureSpec.AT_MOST。
-		 * 
-		 * 
-		 * MeasureSpec.EXACTLY是精确尺寸，
-		 * 当我们将控件的layout_width或layout_height指定为具体数值时如andorid
-		 * :layout_width="50dip"，或者为FILL_PARENT是，都是控件大小已经确定的情况，都是精确尺寸。
-		 * 
-		 * 
-		 * MeasureSpec.AT_MOST是最大尺寸，
-		 * 当控件的layout_width或layout_height指定为WRAP_CONTENT时
-		 * ，控件大小一般随着控件的子空间或内容进行变化，此时控件尺寸只要不超过父控件允许的最大尺寸即可
-		 * 。因此，此时的mode是AT_MOST，size给出了父控件允许的最大尺寸。
-		 * 
-		 * 
-		 * MeasureSpec.UNSPECIFIED是未指定尺寸，这种情况不多，一般都是父控件是AdapterView，
-		 * 通过measure方法传入的模式。
-		 */
-		case MeasureSpec.AT_MOST:
-		case MeasureSpec.EXACTLY:
-			result = widthSize;
-			break;
+			case MeasureSpec.AT_MOST:
+			case MeasureSpec.EXACTLY:
+				result = widthSize;
+				break;
 		}
 		return result;
 	}
@@ -252,182 +235,22 @@ public class StickyHeaderLayout extends RelativeLayout {
 
 		switch (ev.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			mLastX = x;
-			mLastY = y;
+			recordLastTouchPoint(x, y);
 			break;
 		case MotionEvent.ACTION_UP:
 			recycleVelocityTracker();
 			break;
 		case MotionEvent.ACTION_MOVE:
-			int deltaY = y - mLastY;
-			int absDeltaX = Math.abs(x - mLastX);
-			int absDeltaY = Math.abs(y - mLastY);
-			mLastX = x;
-			mLastY = y;
+			calculateOffset(x, y);
+			recordLastTouchPoint(x, y);
 
-			// 横向：子
-			if (absDeltaX >= absDeltaY) {
-				Log.i(TAG, "横向：子");
-				return false;
-			}
-			// 纵向
-			else {
-
-				if (deltaY < 0) {
-					// 上拉
-					if (mOnlyList) {
-						// 头部全部隐藏：子
-						Log.i(TAG, "上拉，头部不可见：子");
-						return false;
-					} else {
-						// 头部为全部隐藏：父
-						Log.i(TAG, "上拉，头部可见：父");
-						return true;
-					}
-				} else {
-					// 下拉
-					if (mOnlyList) {
-						// 头部全部隐藏
-						if (mPager != null && mPagerAdapter != null) {
-							Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
-							if (fragment != null) {
-								if (!(fragment instanceof IHandler)) {
-									Log.d(TAG, "子页面没有实现IHandler接口，由父页面处理");
-									return true;
-								}
-							}
-							if (((IHandler) fragment).checkTop()) {
-								// 列表到顶：父
-								Log.i(TAG, "下拉，头部不可见，列表到顶：父");
-								return true;
-							} else {
-								// 列表没到顶：子
-								Log.i(TAG, "下拉，头部不可见，列表未到顶：子");
-								return false;
-							}
-						}
-					} else {
-						// 头部未全部隐藏：父
-						if (mAllShow) {
-							// 头部全部显示:子
-							Log.i(TAG, "下拉，头部全部可见：子");
-							return false;
-						} else {
-							// 头部未全部显示:父
-							Log.i(TAG, "下拉，头部全部可见：父");
-							return true;
-						}
-					}
-				}
+			if (isMoveHorizontal()) {
+				return interceptOnHorizontalMoving();
+			} else {
+				return interceptOnVerticalMoving();
 			}
 		}
 		return intercepted;
-	}
-
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		mVelocityTracker.addMovement(event);
-		int x = (int) event.getX();
-		int y = (int) event.getY();
-
-		if (!isTouchable) {
-			return false;
-		}
-
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			mLastX = x;
-			mLastY = y;
-			break;
-		case MotionEvent.ACTION_UP:
-			mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
-			int velocityY = (int) mVelocityTracker.getYVelocity();
-			if (Math.abs(velocityY) > mMinimumVelocity) {
-				if (velocityY < 0) {
-					mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getFinalY());
-				} else {
-					mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, -mScroller.getFinalY());
-				}
-			}
-			recycleVelocityTracker();
-			break;
-		case MotionEvent.ACTION_MOVE:
-			int deltaY = y - mLastY;
-			mLastY = y;
-			mScrollHeight = -deltaY;
-			// 处理触摸的情况
-			// 上面不能拉的太过头
-			// 下面不能拉出所有控件的高度
-
-			if (mScroller.getCurrY() + mScrollHeight <= 0) {
-				mAllShow = true;
-				mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, -mScroller.getFinalY());
-				invalidate();
-
-				this.onInterceptTouchEvent(event);
-				return false;
-			}
-			if (mScroller.getFinalY() + mScrollHeight >= 0 && mScroller.getFinalY() + mScrollHeight <= mTotalHeight) {
-				mAllShow = false;
-				if (!mOnlyList) {
-					// 界面上不仅只有List的情况下 看滚动的长度
-					if (mScroller.getFinalY() + mScrollHeight >= mFixedHeight) {
-						// 如果滚动出固定长 则进入完全的List
-						mOnlyList = true;
-						mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getFinalY());
-					} else {
-						// 正常滚动
-						mOnlyList = false;
-						mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mScrollHeight);
-					}
-				} else {
-					// 界面上仅有List的情况下
-					if (mScrollHeight < 0) {
-						// 如果是向下拉 父控件处理滑动
-						mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getCurrY());
-						mOnlyList = false;
-					} else {
-						// 如果是向上推 就得让子控件推
-						if (mPager != null && mPagerAdapter != null) {
-							Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
-							if (fragment != null) {
-								if (!(fragment instanceof IHandler)) {
-									Log.d(TAG, "子页面没有实现IHandler接口，由父页面处理");
-									break;
-								} else {
-									((IHandler) fragment).scroll(mScrollHeight);
-								}
-							}
-						}
-					}
-				}
-
-			}
-			invalidate();
-		default:
-			break;
-		}
-		return true;
-	}
-
-	@Override
-	public void computeScroll() {
-		// 先判断mScroller滚动是否完成
-		if (mScroller.computeScrollOffset()) {
-			// 这里调用View的scrollTo()完成实际的滚动
-			scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-			// 必须调用该方法，否则不一定能看到滚动效果
-			postInvalidate();
-		}
-		super.computeScroll();
-	}
-
-	public void setPager(ViewPager pager) {
-		mPager = pager;
-	}
-
-	public void setPagerAdapter(PagerAdapter adapter) {
-		mPagerAdapter = adapter;
 	}
 
 	private void initVelocityTrackerIfNotExists() {
@@ -443,9 +266,255 @@ public class StickyHeaderLayout extends RelativeLayout {
 		}
 	}
 
+	private boolean interceptOnVerticalMoving() {
+		if (isPullingUp()) {
+			return interceptOnPullingUp();
+		} else {
+			return interceptOnPullingDown();
+		}
+	}
+
+	private boolean interceptOnPullingDown() {
+		if (isHeaderHidden()) {
+			return interceptOnHeaderHidden();
+		} else {
+			return interceptOnHeaderNotHidden();
+
+		}
+	}
+
+	private boolean interceptOnHeaderNotHidden() {
+		if (isHeaderAllShow()) {
+			LOG("Child: pull down and header is all shown");
+			return false;
+		} else {
+			LOG("Parent: pull down and header is not all shown");
+			return true;
+		}
+	}
+
+	private boolean interceptOnHeaderHidden() {
+		if (mPager != null && mPagerAdapter != null) {
+			Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
+			if (fragment != null) {
+				if (!(fragment instanceof IHandler)) {
+					LOG("Parent: child page does not implement IHandle");
+					return true;
+				}
+			}
+			if (((IHandler) fragment).checkTop()) {
+				LOG("Parent: pull down, header hidden and top of page");
+				return true;
+			} else {
+				LOG("Child: pull down, header hidden and not top of page");
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	private boolean interceptOnPullingUp() {
+		if (isHeaderHidden()) {
+			LOG("Child: pull up and header hidden");
+			return false;
+		} else {
+			LOG("Parent: pull up and header not hidden");
+			return true;
+		}
+	}
+
+	private boolean interceptOnHorizontalMoving() {
+		LOG("Child: move horizontally");
+		return false;
+	}
+
+	private boolean isHeaderAllShow() {
+		return isHeaderAllShow;
+	}
+
+	private boolean isHeaderHidden() {
+		return isHeaderHidden;
+	}
+
+	private boolean isPullingUp() {
+		return mDeltaY < 0;
+	}
+
+	private void recordLastTouchPoint(int x, int y) {
+		mLastX = x;
+		mLastY = y;
+	}
+
+	private boolean isMoveHorizontal() {
+		return mAbsDeltaX >= mAbsDeltaY;
+	}
+
+	private void calculateOffset(int x, int y) {
+		mDeltaY = y - mLastY;
+		mAbsDeltaX = Math.abs(x - mLastX);
+		mAbsDeltaY = Math.abs(y - mLastY);
+		mScrollHeight = -mDeltaY;
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		mVelocityTracker.addMovement(event);
+		int x = (int) event.getX();
+		int y = (int) event.getY();
+
+		if (!isTouchable) {
+			return false;
+		}
+
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			recordLastTouchPoint(x, y);
+			break;
+		case MotionEvent.ACTION_UP:
+			flingOnActionUp();
+			recycleVelocityTracker();
+			break;
+		case MotionEvent.ACTION_MOVE:
+			calculateOffset(x, y);
+			recordLastTouchPoint(x, y);
+
+			if (isScrollingToHeaderAllShow()) {
+				scrollToHeaderAllShowExactly();
+				return false;
+			}
+
+			if (isScrollingInRange()) {
+				isHeaderAllShow = false;
+				if (!isHeaderHidden()) {
+					scrollOnHeaderNotHidden();
+				} else {
+					if (isScrollingDown()) {
+						scrollDownOnHeaderHidden();
+					} else {
+						childScrollUp();
+					}
+				}
+			}
+			invalidate();
+		default:
+			break;
+		}
+		return true;
+	}
+
+	private void childScrollUp() {
+		if (mPager != null && mPagerAdapter != null) {
+			Fragment fragment = mPagerAdapter.getItem(mPager.getCurrentItem());
+			if (fragment != null) {
+				if (!(fragment instanceof IHandler)) {
+					LOG("Parent: child page does not implement IHandle");
+				} else {
+					LOG("child scroll up");
+					((IHandler) fragment).scroll(mScrollHeight);
+				}
+			}
+		}
+	}
+
+	private void scrollDownOnHeaderHidden() {
+		LOG("header hidden, parent scroll down");
+		mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getCurrY());
+		isHeaderHidden = false;
+	}
+
+	private boolean isScrollingDown() {
+		return mScrollHeight < 0;
+	}
+
+	private void scrollOnHeaderNotHidden() {
+		if (isScrollingToHeaderHidden()) {
+			scrollToHeaderHiddenExactly();
+		} else {
+			scrollNormally();
+		}
+	}
+
+	private void scrollNormally() {
+		isHeaderHidden = false;
+		mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mScrollHeight);
+	}
+
+	private void scrollToHeaderHiddenExactly() {
+		LOG("scroll to header hidden exactly");
+		isHeaderHidden = true;
+		mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getFinalY());
+	}
+
+	private boolean isScrollingToHeaderHidden() {
+		return mScroller.getFinalY() + mScrollHeight >= mFixedHeight;
+	}
+
+	private boolean isScrollingInRange() {
+		return mScroller.getFinalY() + mScrollHeight >= 0 && mScroller.getFinalY() + mScrollHeight <= mTotalHeight;
+	}
+
+	private void scrollToHeaderAllShowExactly() {
+		LOG("scroll to header all show exactly");
+		isHeaderAllShow = true;
+		mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, -mScroller.getFinalY());
+	}
+
+	private boolean isScrollingToHeaderAllShow() {
+		return mScroller.getCurrY() + mScrollHeight <= 0;
+	}
+
+	private void flingOnActionUp() {
+		mVelocityTracker.computeCurrentVelocity(1000, mMaximumVelocity);
+		mVelocityY = (int) mVelocityTracker.getYVelocity();
+		if (isVelocityFastEnough()) {
+			if (isFlingUp()) {
+				flingToHideHeader();
+			} else {
+				flingToAllShowHeader();
+			}
+		}
+	}
+
+	private void flingToAllShowHeader() {
+		LOG("fling down, all show header");
+		mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, -mScroller.getFinalY());
+		isHeaderAllShow = true;
+	}
+
+	private void flingToHideHeader() {
+		LOG("fling up, hide header");
+		mScroller.startScroll(mScroller.getFinalX(), mScroller.getFinalY(), 0, mFixedHeight - mScroller.getFinalY());
+		isHeaderHidden = true;
+	}
+
+	private boolean isFlingUp() {
+		return mVelocityY < 0;
+	}
+
+	private boolean isVelocityFastEnough() {
+		return Math.abs(mVelocityY) > mMinimumVelocity;
+	}
+
+	@Override
+	public void computeScroll() {
+		if (mScroller.computeScrollOffset()) {
+			scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+			// 必须调用该方法，否则不一定能看到滚动效果
+			postInvalidate();
+		}
+		super.computeScroll();
+	}
+
 	public interface IHandler {
 		//	如果实现这个接口 下拉时会先将子页面拉倒顶 再拉父页面
 		boolean checkTop();
 		void scroll(int y);
+	}
+
+	private void LOG(String msg) {
+		if (isDebugMode) {
+			Log.d(TAG, msg);
+		}
 	}
 }

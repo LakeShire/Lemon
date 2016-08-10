@@ -33,10 +33,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
 	{
 		super(fm);
 	}
-	
-	/**
-	 * Return the Fragment associated with a specified position.
-	 */
+
 	@SuppressWarnings("finally")
 	public Fragment getItem(int position) {
 		Class<?> c;

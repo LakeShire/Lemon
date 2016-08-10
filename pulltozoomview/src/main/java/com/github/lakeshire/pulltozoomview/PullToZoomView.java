@@ -17,20 +17,56 @@ import android.widget.ScrollView;
 public class PullToZoomView extends ScrollView {
 
     private static final String TAG = PullToZoomView.class.getName();
+
     private Context mContext;
     private View mHeaderView;
-    private int mHeaderViewHeight;
-    private boolean isFirst = true;
-    private int mHeight;
-    private boolean isAnimating = false;
     private View mContentView;
-    private PtrHandler mPtrHandler;
+
+    private int mHeaderViewHeight;
+    private int mHeight;
+
+    private boolean isFirst = true;
+    private boolean isAnimating = false;
     private boolean isZoomable = true;
     private boolean isRefreshing = false;
+    private boolean isZoomed = false;
+    private boolean isDebugMode = true;
+    private boolean isRefreshable = false;
+
+    private PtrHandler mPtrHandler;
     private PtrUiHandler mPtrUiHandler;
+
+    private int mScrollY;
+    private int mDownY;
+    private int mLastY;
+    private int mDeltaY;
+    private float mAccuracy = 0.25f;
+    private int mRefreshThreshold = 400;
+
+    private int mPullState = UNKNOWN;
+    public static final int UNKNOWN = 0;
+    public static final int PULL_UP = 1;
+    public static final int PULL_DOWN = 2;
+
+    public void setDebugMode(boolean debugMode) {
+        isDebugMode = debugMode;
+    }
+
+    public void setRefreshable(boolean refreshable) {
+        isRefreshable = refreshable;
+    }
+
+    public void setZoomable(boolean zoom) {
+        this.isZoomable = zoom;
+    }
+
+    public void setmRefreshThreshold(int value) {
+        this.mRefreshThreshold = value;
+    }
 
     public PullToZoomView(Context context) {
         super(context);
+        mContext = context;
     }
 
     public PullToZoomView(Context context, AttributeSet attrs) {
@@ -40,13 +76,16 @@ public class PullToZoomView extends ScrollView {
 
     public PullToZoomView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        adjustOnScrollOverTop();
+    }
 
-        //  快速滑动到顶时 有可能滑过头 这里调整一下
+    private void adjustOnScrollOverTop() {
         if (getScrollY() < 0) {
             scrollTo(0, 0);
         }
@@ -56,31 +95,15 @@ public class PullToZoomView extends ScrollView {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         if (isFirst) {
-            mHeaderViewHeight = mHeaderView.getMeasuredHeight();
-            isFirst = false;
+            getHeaderViewHeightOnFirstLayout();
         }
-
-        //  快速滑动到顶时 有可能滑过头 这里调整一下
-        if (getScrollY() < 0) {
-            scrollTo(0, 0);
-        }
+        adjustOnScrollOverTop();
     }
 
-    //  分发时的触摸点
-    private int mLastInterceptY;
-    private int mScrollY;
-    private boolean isZoomed = false;
-
-    //  手指按下时的触摸点
-    private int mFirstY;
-    //  上一个触摸点
-    private int mLastY;
-
-    //  拖动状态：不定 上拉 下拉
-    private int mPullState = UNKNOWN;
-    public static final int UNKNOWN = 0;
-    public static final int PULLUP = 1;
-    public static final int PULLDOWN = 2;
+    private void getHeaderViewHeightOnFirstLayout() {
+        mHeaderViewHeight = mHeaderView.getMeasuredHeight();
+        isFirst = false;
+    }
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -88,41 +111,25 @@ public class PullToZoomView extends ScrollView {
 
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mLastInterceptY = y;
-                mLastY = y;
-                mFirstY = y;
+                recordLastMovePoint(y);
+                recordLastDownPoint(y);
                 break;
             case MotionEvent.ACTION_UP:
                 break;
             case MotionEvent.ACTION_MOVE:
-                int deltaY = y - mLastInterceptY;
-                mLastInterceptY = y;
-                mLastY = y;
+                mDeltaY = y - mLastY;
+                Log.d(TAG, "mDeltaY: " + mDeltaY);
+                recordLastMovePoint(y);
 
-                if (deltaY < 0) {
-                    // 上拉
-                    mPullState = PULLUP;
-                    if (getScrollY() > mHeaderViewHeight) {
-                        // 头部全部隐藏：子
-                        Log.d(TAG, "上拉，头部不可见：子");
-                        return false;
-                    } else {
-                        // 头部为全部隐藏：父
-                        Log.d(TAG, "上拉，头部可见：父");
-                        return true;
-                    }
-                } else if (deltaY > 0) {
-                    // 下拉
-                    mPullState = PULLDOWN;
-                    if (checkTop()) {
-                        mFirstY = y;
-                        Log.d(TAG, "下拉，头部不可见，列表顶， 父");
-                        return true;
-                    } else {
-                        Log.d(TAG, "下拉，头部不可见，子");
-                        return false;
-                    }
-                } else {
+                if (isPullingUp()) {
+                    mPullState = PULL_UP;
+                    return interceptOnPullingUp();
+                } else if (isPullingDown()) {
+                    mPullState = PULL_DOWN;
+                    return interceptOnPullingDown(y);
+                }
+                else {
+                    LOG("Parent: pull state not decided");
                     break;
                 }
             }
@@ -130,6 +137,47 @@ public class PullToZoomView extends ScrollView {
         // 会出Invalid pointerId=-1 in onTouchEvent MOVE这句错误
         // 无法正常上拉
         return super.onInterceptTouchEvent(ev);
+    }
+
+    private boolean interceptOnPullingDown(int y) {
+        if (checkTop()) {
+            recordLastDownPoint(y);
+            LOG("Parent: pull down, header hidden, top of page");
+            return true;
+        } else {
+            LOG("Child: pull down, header hidden, not top of page");
+            return false;
+        }
+    }
+
+    private boolean interceptOnPullingUp() {
+        if (isHeaderHidden()) {
+            LOG("Child: pull up and header hidden");
+            return false;
+        } else {
+            LOG("Parent: pull up and header not hidden");
+            return true;
+        }
+    }
+
+    private boolean isHeaderHidden() {
+        return getScrollY() > mHeaderViewHeight;
+    }
+
+    private boolean isPullingUp() {
+        return mDeltaY < 0;
+    }
+
+    private boolean isPullingDown() {
+        return mDeltaY > 0;
+    }
+
+    private void recordLastDownPoint(int y) {
+        mDownY = y;
+    }
+
+    private void recordLastMovePoint(int y) {
+        mLastY = y;
     }
 
     @Override
@@ -141,13 +189,14 @@ public class PullToZoomView extends ScrollView {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                recordLastDownPoint(y);
+                recordLastDownPoint(y);
+                recordLastScrollY();
                 isZoomed = false;
-                mLastY = y;
-                mFirstY = y;
-                mScrollY = getScrollY();
                 break;
             case MotionEvent.ACTION_UP:
-                if (isZoomed && mPullState == PULLDOWN && !isRefreshing) {
+                canRelease();
+                if (canRelease()) {
                     mPullState = UNKNOWN;
                     onReleased();
                 } else {
@@ -156,72 +205,50 @@ public class PullToZoomView extends ScrollView {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                int deltaY = y - mLastY;
-                mLastY = y;
-                if (mScrollY > 0 && getScrollY() <= 0) {
-                    mFirstY = y;
-                }
-                mScrollY = getScrollY();
-
-                if (mPullState == UNKNOWN) {
-                    if (deltaY > 0) {
-                        mPullState = PULLDOWN;
-                    } else {
-                        mPullState = PULLUP;
-                    }
-                }
+                calculateOffset(y);
+                updateDownPointIfNeed(y);
+                recordLastScrollY();
+                decidePullStateIfNeed();
 
                 /**
                  * TODO: 当头部没完全消失时 上推至消失 再下拉 本来应该由子View处理
                  * TODO: 但期间手指没有离开过 没有重新分配触摸事件
                  * TODO: 这里判断移动方向变化后重新分配触摸事件 然而还是有点生硬
                  */
-
-                if (mPullState == PULLUP && deltaY > 0 || mPullState == PULLDOWN && deltaY < 0) {
-                    scroll(deltaY);
-                    this.onInterceptTouchEvent(event);
+                if (isPullStateChanged()) {
+                    LOG("pull state changed, intercept again");
+                    scroll(mDeltaY);
+                    onInterceptTouchEvent(event);
                     return true;
                 }
 
-                if (mPullState == PULLDOWN) {
-                    // 下拉
+                // 必须在重新拦截触摸事件后更新最后的移动点 否则在拦截中的偏移一直为0 无法确定新方向
+                recordLastMovePoint(y);
+
+                if (mPullState == PULL_DOWN) {
                     if (getScrollY() > 0) {
                         return super.onTouchEvent(event);
                     } else {
-                        if (y - mFirstY >= mHeaderViewHeight / 2) {
-                            if (!isRefreshing) {
-                                isRefreshing = true;
-                                uiChangeOnRefreshStart();
-                                onRefresh(this);
-                            }
-//                            return super.onTouchEvent(event);
+                        if (isPullingEnoughToRefresh(y)) {
+                            startRefreshIfPossible();
                         } else {
-                            uiChangeOnRefreshPositionChange(y - mFirstY);
-                            if (y - mFirstY > 0 && isZoomable) {
-                                zoom(y - mFirstY);
+                            uiChangeOnRefreshPositionChange(y - mDownY);
+                            if (canZoom(y)) {
+                                zoom(y - mDownY);
                             } else {
                                 return super.onTouchEvent(event);
                             }
                         }
-//                        if (y - mFirstY > 0 && isZoomable) {
-//                            zoom(y - mFirstY);
-//                        } else {
-//                            return super.onTouchEvent(event);
-//                        }
                     }
-                } else if (mPullState == PULLUP) {
-                    // 上拉
-                    if (getScrollY() >= mHeaderViewHeight) {
-                        scroll(-deltaY);
-                        invalidate();
-                    } else if (getScrollY() <= 0) {
-                        if (y - mFirstY > 0) {
-                            zoom(y - mFirstY);
+                } else if (mPullState == PULL_UP) {
+                    if (isHeaderHidden()) {
+                        childScroll();
+                    } else {
+                        if (canZoom(y)) {
+                            zoom(y - mDownY);
                         } else {
                             return super.onTouchEvent(event);
                         }
-                    } else {
-                        return super.onTouchEvent(event);
                     }
                 }
                 break;
@@ -229,8 +256,68 @@ public class PullToZoomView extends ScrollView {
         return true;
     }
 
+    private boolean canRelease() {
+        return isZoomed && mPullState == PULL_DOWN && !isRefreshing;
+    }
+
+    private void childScroll() {
+        scroll(-mDeltaY);
+    }
+
+    private boolean canZoom(int y) {
+       return y - mDownY > 0 && isZoomable;
+    }
+
+    private void startRefreshIfPossible() {
+        if (!isRefreshing) {
+            isRefreshing = true;
+            uiChangeOnRefreshStart();
+            onRefresh(this);
+        }
+    }
+
+    private boolean isPullingEnoughToRefresh(int y) {
+        if (isRefreshable) {
+            return y - mDownY >= mRefreshThreshold;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean isPullStateChanged() {
+       return mPullState == PULL_UP && mDeltaY > 0 || mPullState == PULL_DOWN && mDeltaY < 0;
+    }
+
+    private void decidePullStateIfNeed() {
+        if (mPullState == UNKNOWN) {
+            if (isPullingDown()) {
+                mPullState = PULL_DOWN;
+            } else {
+                mPullState = PULL_UP;
+            }
+        }
+    }
+
+    private void updateDownPointIfNeed(int y) {
+        if (isScrollDirectionChanged()) {
+            recordLastDownPoint(y);
+        }
+    }
+
+    private boolean isScrollDirectionChanged() {
+        return mScrollY > 0 && getScrollY() <= 0;
+    }
+
+    private void calculateOffset(int y) {
+        mDeltaY = y - mLastY;
+    }
+
+    private void recordLastScrollY() {
+        mScrollY = getScrollY();
+    }
+
     private void zoom(int deltaY) {
-        float rate = (float) (deltaY * 0.25 / (float) mHeaderViewHeight);
+        float rate = (deltaY * mAccuracy / (float) mHeaderViewHeight);
         int height = (int) ((1 + rate) * mHeaderViewHeight);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mHeaderView.getLayoutParams();
         lp.height = height;
@@ -239,7 +326,7 @@ public class PullToZoomView extends ScrollView {
         mHeaderView.setScaleX(1 + rate);
         mHeight = height;
         isZoomed = true;
-        scrollTo(0, 0);
+        adjustOnScrollOverTop();
     }
 
     private void onReleased() {
@@ -248,7 +335,6 @@ public class PullToZoomView extends ScrollView {
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
-
                     int value = (int) animation.getAnimatedValue();
                     float rate = (float) value / mHeaderViewHeight;
                     LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) mHeaderView.getLayoutParams();
@@ -283,7 +369,7 @@ public class PullToZoomView extends ScrollView {
                 }
             });
             animator.start();
-            scrollTo(0, 0);
+            adjustOnScrollOverTop();
         }
     }
 
@@ -301,13 +387,13 @@ public class PullToZoomView extends ScrollView {
     public void setPtrHandler(PtrHandler ptrHandler) {
         this.mPtrHandler = ptrHandler;
     }
+
     public void setPtrUiHandler(PtrUiHandler ptrHandler) {
         this.mPtrUiHandler = ptrHandler;
     }
+
     public interface PtrHandler {
-        // 判断内容View是否拉到顶部
         boolean checkTop();
-        // 内容View滚动一定距离
         void scroll(int y);
         void onRefresh(PullToZoomView view);
     }
@@ -326,10 +412,6 @@ public class PullToZoomView extends ScrollView {
         } else {
             isRefreshing = false;
         }
-    }
-
-    public void setZoomable(boolean zoom) {
-        this.isZoomable = zoom;
     }
     
     public void uiChangeOnRefreshCompleted() {
@@ -367,6 +449,12 @@ public class PullToZoomView extends ScrollView {
     public void onRefresh(PullToZoomView view) {
         if (mPtrHandler != null) {
             mPtrHandler.onRefresh(view);
+        }
+    }
+
+    private void LOG(String msg) {
+        if (isDebugMode) {
+            Log.d(TAG, msg);
         }
     }
 }

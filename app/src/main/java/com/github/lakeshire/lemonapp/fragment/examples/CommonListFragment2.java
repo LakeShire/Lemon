@@ -209,7 +209,11 @@ public class CommonListFragment2 extends BaseFragment {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void scroll(int y) {
-        listView.scrollListBy(y);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            listView.scrollListBy(y);
+        } else {
+            listView.scrollTo(0, y);
+        }
     }
 
     public void onRefresh(final PullToZoomView ptrView) {
